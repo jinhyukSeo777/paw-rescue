@@ -6,10 +6,16 @@ import { faBookmark as FullBookmark } from "@fortawesome/free-solid-svg-icons";
 import { faBookmark as ImptyBookmark } from "@fortawesome/free-regular-svg-icons";
 import { useEffect, useState } from "react";
 
-const Container = styled.div`
+const Container = styled.div<{ $hoverEffect: boolean | undefined }>`
   position: relative;
   width: 200px;
   cursor: pointer;
+  position: relative;
+  top: 0;
+  &:hover {
+    top: ${(props) => (props.$hoverEffect ? "-1.5rem" : null)};
+    transition: ${(props) => (props.$hoverEffect ? "0.3s" : null)};
+  }
 `;
 
 const Photo = styled.div<{ $url: string }>`
@@ -55,9 +61,10 @@ const State = styled.div`
 
 interface IProps {
   data: IData;
+  hoverEffect?: true | undefined;
 }
 
-const Item = ({ data }: IProps) => {
+const Item = ({ data, hoverEffect }: IProps) => {
   const [isLiked, setIsLiked] = useState(false);
 
   const getLikeList = () => {
@@ -90,7 +97,7 @@ const Item = ({ data }: IProps) => {
   };
 
   return (
-    <Container>
+    <Container $hoverEffect={hoverEffect}>
       <Photo $url={data.IMAGE_COURS}></Photo>
       <Info>
         <div>

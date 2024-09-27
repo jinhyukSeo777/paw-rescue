@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { g2, SECONDARY_COLOR } from "../../utils/color";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -6,6 +6,7 @@ import { faArrowLeft, faArrowRight } from "@fortawesome/free-solid-svg-icons";
 
 const Container = styled.div`
   width: 100%;
+  min-height: 20rem;
   margin-bottom: 5rem;
   position: relative;
   display: flex;
@@ -79,6 +80,10 @@ const Pagenation = ({ page, setPage, totalCount }: IProps) => {
     setPage(value);
   };
 
+  useEffect(() => {
+    setPage(1);
+  }, [totalCount]);
+
   return (
     <Container>
       {group !== 1 && (
@@ -108,7 +113,7 @@ const Pagenation = ({ page, setPage, totalCount }: IProps) => {
           return <></>;
         })}
       </BtnArea>
-      {group !== totalGroups && (
+      {group !== totalGroups && totalGroups !== 0 && (
         <Arrow onClick={goNextGroup}>
           <FontAwesomeIcon icon={faArrowRight} />
         </Arrow>
