@@ -3,7 +3,7 @@ import { DESKTOP, PHONE, TABLET } from "../../utils/size";
 import { ReactComponent as MyLogo } from "../../assets/icons/logo.svg";
 import { g1, SECONDARY_COLOR } from "../../utils/color";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const Container = styled.header`
   width: 100%;
@@ -42,15 +42,6 @@ const Logo = styled.h1`
 const Gnb = styled.ul<{ $active: boolean }>`
   display: flex;
   list-style: none;
-  li {
-    padding: 1rem;
-    border-radius: 2rem;
-    cursor: pointer;
-    &:hover {
-      background-color: ${SECONDARY_COLOR};
-      color: white;
-    }
-  }
   @media (max-width: ${TABLET}) {
     display: block;
     position: fixed;
@@ -81,6 +72,17 @@ const Gnb = styled.ul<{ $active: boolean }>`
       color: ${SECONDARY_COLOR};
       border: 1px solid ${SECONDARY_COLOR};
     }
+  }
+`;
+
+const Li = styled.li<{ $currentUrl: boolean }>`
+  padding: 1rem;
+  border-radius: 2rem;
+  cursor: pointer;
+  color: ${(props) => (props.$currentUrl ? `${SECONDARY_COLOR}` : null)};
+  &:hover {
+    background-color: ${SECONDARY_COLOR};
+    color: white;
   }
 `;
 
@@ -138,6 +140,8 @@ const HamBtn = styled.button<{ $active: boolean }>`
 const Header = () => {
   const [isHamActive, setIsHamActive] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
+  const currentUrl = location.pathname;
 
   return (
     <Container>
@@ -148,10 +152,24 @@ const Header = () => {
           <span>구조대</span>
         </Logo>
         <Gnb $active={isHamActive}>
-          <li onClick={() => navigate("/list")}>유기동물 보기</li>
-          <li>털친소</li>
-          <li>주변보호소 찾기</li>
-          <li>나의 관심동물</li>
+          <Li
+            onClick={() => navigate("/list")}
+            $currentUrl={currentUrl === "/list"}
+          >
+            유기동물 보기
+          </Li>
+          <Li onClick={() => navigate("/")} $currentUrl={currentUrl === "/aa"}>
+            털친소
+          </Li>
+          <Li
+            onClick={() => navigate("/shelter")}
+            $currentUrl={currentUrl === "/shelter"}
+          >
+            주변보호소 찾기
+          </Li>
+          <Li onClick={() => navigate("/")} $currentUrl={currentUrl === "/bb"}>
+            나의 관심동물
+          </Li>
         </Gnb>
         <HamBtn
           onClick={() => setIsHamActive((prev) => !prev)}
