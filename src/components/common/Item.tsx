@@ -5,6 +5,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBookmark as FullBookmark } from "@fortawesome/free-solid-svg-icons";
 import { faBookmark as ImptyBookmark } from "@fortawesome/free-regular-svg-icons";
 import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import { updateMyPet } from "../../contexts/counterSlice";
 
 const Container = styled.div<{ $hoverEffect: boolean | undefined }>`
   position: relative;
@@ -66,6 +68,7 @@ interface IProps {
 
 const Item = ({ data, hoverEffect }: IProps) => {
   const [isLiked, setIsLiked] = useState(false);
+  const dispatch = useDispatch();
 
   const getLikeList = () => {
     const obj = localStorage.getItem("like");
@@ -88,10 +91,12 @@ const Item = ({ data, hoverEffect }: IProps) => {
         (value) => value.ABDM_IDNTFY_NO !== data.ABDM_IDNTFY_NO
       );
       localStorage.setItem("like", JSON.stringify(newList));
+      dispatch(updateMyPet(newList));
       setIsLiked(false);
     } else {
       likeList.push(data);
       localStorage.setItem("like", JSON.stringify(likeList));
+      dispatch(updateMyPet(likeList));
       setIsLiked(true);
     }
   };
