@@ -21,6 +21,11 @@ const Container = styled.main`
   align-items: flex-start;
 `;
 
+const H2 = styled.h2`
+  margin-top: 3rem;
+  font-size: 2rem;
+`;
+
 const DropdownArea = styled.div`
   display: flex;
   gap: 0.5rem;
@@ -157,10 +162,8 @@ const List = () => {
         <Dropdown category="성별" data={SEX} setState={setSex} />
         <Dropdown category="중성화" data={NEUT} setState={setNeut} />
       </DropdownArea>
-      <ShowItems
-        data={filteredData.slice((page - 1) * 20, page * 20)}
-        totalCount={filteredData.length}
-      />
+      <H2>{filteredData.length}마리의 친구들이 기다리고 있어요</H2>
+      <ShowItems data={filteredData.slice((page - 1) * 20, page * 20)} />
       <Pagenation
         page={page}
         setPage={setPage}

@@ -167,7 +167,10 @@ const Header = () => {
           >
             주변보호소 찾기
           </Li>
-          <Li onClick={() => navigate("/")} $currentUrl={currentUrl === "/bb"}>
+          <Li
+            onClick={() => navigate("/mypet")}
+            $currentUrl={currentUrl === "/bb"}
+          >
             나의 관심동물
           </Li>
         </Gnb>

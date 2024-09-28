@@ -18,7 +18,7 @@ const Container = styled.section`
   justify-content: center;
   align-items: center;
   width: 100%;
-  margin: 5rem 0;
+  margin: 5rem 0 3rem 0;
 `;
 
 const H2 = styled.h2`

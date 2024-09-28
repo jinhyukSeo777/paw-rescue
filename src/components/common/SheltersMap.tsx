@@ -4,10 +4,11 @@ import { useEffect, useState } from "react";
 
 const Container = styled.section`
   width: 100%;
-  height: 30rem;
-  background-color: black;
-  border-radius: 0.5rem;
-  overflow: hidden;
+  margin-bottom: 3rem;
+`;
+
+const H2 = styled.h2`
+  font-size: 2rem;
 `;
 
 export interface IShelter {
@@ -62,6 +63,7 @@ const SheltersMap = ({ shelters, setShelterName }: IProps) => {
 
   return (
     <Container>
+      <H2>나와 가까운 보호소를 클릭해 보세요</H2>
       <Map
         center={{
           lat: 37.566826,
@@ -69,7 +71,7 @@ const SheltersMap = ({ shelters, setShelterName }: IProps) => {
         }}
         style={{
           width: "100%",
-          height: "100%",
+          height: "30rem",
         }}
         level={3}
         onCreate={setMap}

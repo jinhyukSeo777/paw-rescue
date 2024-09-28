@@ -172,7 +172,6 @@ const Shelter = () => {
 
   return (
     <Container>
-      <H2>나와 가까운 보호소를 클릭해 보세요</H2>
       <SheltersMap shelters={shelters} setShelterName={setShelterName} />
       <DropdownArea>
         <Dropdown category="시도군" data={LEGION} setState={setLegion} />
@@ -182,10 +181,8 @@ const Shelter = () => {
         <Dropdown category="성별" data={SEX} setState={setSex} />
         <Dropdown category="중성화" data={NEUT} setState={setNeut} />
       </DropdownArea>
-      <ShowItems
-        data={filteredData.slice((page - 1) * 20, page * 20)}
-        totalCount={filteredData.length}
-      />
+      <H2>{shelterName || "경기도"}에서 친구들이 기다리고 있어요</H2>
+      <ShowItems data={filteredData.slice((page - 1) * 20, page * 20)} />
       <Pagenation
         page={page}
         setPage={setPage}
