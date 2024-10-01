@@ -7,6 +7,7 @@ import { faBookmark as ImptyBookmark } from "@fortawesome/free-regular-svg-icons
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { updateMyPet } from "../../contexts/counterSlice";
+import { useNavigate } from "react-router-dom";
 
 const Container = styled.div<{ $hoverEffect: boolean | undefined }>`
   position: relative;
@@ -69,6 +70,7 @@ interface IProps {
 const Item = ({ data, hoverEffect }: IProps) => {
   const [isLiked, setIsLiked] = useState(false);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const getLikeList = () => {
     const obj = localStorage.getItem("like");
@@ -84,7 +86,10 @@ const Item = ({ data, hoverEffect }: IProps) => {
     setIsLiked(isIn);
   }, [data.ABDM_IDNTFY_NO]);
 
-  const handleLike = () => {
+  const handleLike = (
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
+    event.stopPropagation(); // 좋아요 클릭시 버블링 방지
     const likeList = getLikeList();
     if (isLiked) {
       const newList = likeList.filter(
@@ -101,8 +106,12 @@ const Item = ({ data, hoverEffect }: IProps) => {
     }
   };
 
+  const goDetailPage = () => {
+    navigate("/detail", { state: { data } });
+  };
+
   return (
-    <Container $hoverEffect={hoverEffect}>
+    <Container onClick={goDetailPage} $hoverEffect={hoverEffect}>
       <Photo $url={data.IMAGE_COURS}></Photo>
       <Info>
         <div>

@@ -5,6 +5,7 @@ import List from "./pages/List";
 import ScrollToTop from "./utils/ScrollToTop";
 import Shelter from "./pages/Shelter";
 import MyPet from "./pages/MyPet";
+import Detail from "./pages/Detail";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
         <Route path="/list" element={<List />} />
         <Route path="/shelter" element={<Shelter />} />
         <Route path="/mypet" element={<MyPet />} />
+        <Route path="/detail" element={<Detail />} />
       </Routes>
     </>
   );

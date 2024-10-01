@@ -122,6 +122,7 @@ export interface IData {
   SIGUN_NM: string; //시군명
   STATE_NM: string; //상태
   ABDM_IDNTFY_NO: string; //고유번호
+  PBLANC_IDNTFY_NO: string; // 공고번호
 }
 
 const Home = () => {
