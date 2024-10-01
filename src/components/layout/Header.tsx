@@ -143,32 +143,37 @@ const Header = () => {
   const location = useLocation();
   const currentUrl = location.pathname;
 
+  const changeUrl = (path: string) => {
+    navigate(path);
+    setIsHamActive(false);
+  };
+
   return (
     <Container>
       <Nav>
-        <Logo onClick={() => navigate("/")}>
+        <Logo onClick={() => changeUrl("/")}>
           <span>발바닥</span>
           <MyLogo width={30} height={30} />
           <span>구조대</span>
         </Logo>
         <Gnb $active={isHamActive}>
           <Li
-            onClick={() => navigate("/list")}
+            onClick={() => changeUrl("/list")}
             $currentUrl={currentUrl === "/list"}
           >
             유기동물 보기
           </Li>
-          <Li onClick={() => navigate("/")} $currentUrl={currentUrl === "/aa"}>
+          <Li onClick={() => changeUrl("/")} $currentUrl={currentUrl === "/aa"}>
             털친소
           </Li>
           <Li
-            onClick={() => navigate("/shelter")}
+            onClick={() => changeUrl("/shelter")}
             $currentUrl={currentUrl === "/shelter"}
           >
             주변보호소 찾기
           </Li>
           <Li
-            onClick={() => navigate("/mypet")}
+            onClick={() => changeUrl("/mypet")}
             $currentUrl={currentUrl === "/bb"}
           >
             나의 관심동물
