@@ -5,10 +5,8 @@ import { useEffect, useState } from "react";
 const Container = styled.section`
   width: 100%;
   margin-bottom: 3rem;
-`;
-
-const H2 = styled.h2`
-  font-size: 2rem;
+  border-radius: 0.5rem;
+  overflow: hidden;
 `;
 
 export interface IShelter {
@@ -19,7 +17,7 @@ export interface IShelter {
 
 interface IProps {
   shelters: IShelter[];
-  setShelterName: React.Dispatch<React.SetStateAction<string>>;
+  setShelterName?: React.Dispatch<React.SetStateAction<string>>;
 }
 
 const SheltersMap = ({ shelters, setShelterName }: IProps) => {
@@ -53,6 +51,7 @@ const SheltersMap = ({ shelters, setShelterName }: IProps) => {
   }, [shelters, map]);
 
   const handleClick = (marker: IShelter) => {
+    if (!setShelterName) return;
     setShelterName(marker.SHTER_NM);
     const bounds = new kakao.maps.LatLngBounds();
     bounds.extend(
@@ -63,7 +62,6 @@ const SheltersMap = ({ shelters, setShelterName }: IProps) => {
 
   return (
     <Container>
-      <H2>나와 가까운 보호소를 클릭해 보세요</H2>
       <Map
         center={{
           lat: 37.566826,
