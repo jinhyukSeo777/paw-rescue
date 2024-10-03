@@ -163,7 +163,10 @@ const Header = () => {
           >
             유기동물 보기
           </Li>
-          <Li onClick={() => changeUrl("/")} $currentUrl={currentUrl === "/aa"}>
+          <Li
+            onClick={() => changeUrl("/recommend")}
+            $currentUrl={currentUrl === "/aa"}
+          >
             털친소
           </Li>
           <Li

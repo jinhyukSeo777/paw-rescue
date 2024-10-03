@@ -6,6 +6,8 @@ import ScrollToTop from "./utils/ScrollToTop";
 import Shelter from "./pages/Shelter";
 import MyPet from "./pages/MyPet";
 import Detail from "./pages/Detail";
+import Recommend from "./pages/Recommend";
+import Result from "./pages/Result";
 
 function App() {
   return (
@@ -18,6 +20,8 @@ function App() {
         <Route path="/shelter" element={<Shelter />} />
         <Route path="/mypet" element={<MyPet />} />
         <Route path="/detail" element={<Detail />} />
+        <Route path="/recommend" element={<Recommend />} />
+        <Route path="/result" element={<Result />} />
       </Routes>
     </>
   );
