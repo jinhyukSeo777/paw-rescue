@@ -61,6 +61,12 @@ const BannerArea = styled.div`
     align-items: center;
     cursor: pointer;
   }
+  svg {
+    fill: white;
+    stroke: white;
+    width: 30px;
+    height: 30px;
+  }
   @media (max-width: ${TABLET}) {
     div {
       width: 100%;
@@ -123,6 +129,7 @@ export interface IData {
   STATE_NM: string; //상태
   ABDM_IDNTFY_NO: string; //고유번호
   PBLANC_IDNTFY_NO: string; // 공고번호
+  COLOR_NM: string; // 색상
 }
 
 const Home = () => {
@@ -141,7 +148,7 @@ const Home = () => {
           </p>
           <button>
             나의 반려동물 찾기
-            <MyIcon style={{ marginLeft: "0.3rem" }} width={30} height={30} />
+            <MyIcon style={{ marginLeft: "0.3rem" }} />
           </button>
         </BannerArea>
         <StyledBg />

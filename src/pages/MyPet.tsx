@@ -23,6 +23,7 @@ const Container = styled.main`
 
 const H2 = styled.h2`
   font-size: 2rem;
+  text-align: center;
 `;
 
 const Div = styled.section`
