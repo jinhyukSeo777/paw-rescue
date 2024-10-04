@@ -1,14 +1,14 @@
 import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
 import { useCallback, useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { IData } from "./Home";
 import { DESKTOP } from "../utils/size";
 import styled from "styled-components";
-import { g1, g2, SECONDARY_COLOR } from "../utils/color";
+import { g1, g2, MAIN_COLOR } from "../utils/color";
 import { ReactComponent as MyPaw } from "../assets/icons/paw.svg";
 import { ReactComponent as MyBg } from "../assets/images/bg.svg";
 import Answer from "../components/common/Answer";
+import { fetchAllData } from "../utils/fetchData";
 
 const Container = styled.main`
   width: 90%;
@@ -69,7 +69,7 @@ const Photo = styled.div<{ $url: string }>`
   width: 200px;
   height: 200px;
   border-radius: 50%;
-  border: 3px solid ${SECONDARY_COLOR};
+  border: 3px solid ${MAIN_COLOR};
   background: url(${(props) => props.$url}) no-repeat center;
   background-size: cover;
   @media (max-width: 850px) {
@@ -82,8 +82,8 @@ const GoDetail = styled.button`
   width: 150px;
   height: 50px;
   border-radius: 2rem;
-  border: 1px solid ${SECONDARY_COLOR};
-  color: ${SECONDARY_COLOR};
+  border: 1px solid ${MAIN_COLOR};
+  color: ${MAIN_COLOR};
   display: flex;
   justify-content: center;
   align-items: center;
@@ -95,11 +95,11 @@ const GoDetail = styled.button`
     margin-left: 3px;
     width: 35px;
     height: 35px;
-    fill: ${SECONDARY_COLOR};
-    stroke: ${SECONDARY_COLOR};
+    fill: ${MAIN_COLOR};
+    stroke: ${MAIN_COLOR};
   }
   &:hover {
-    background-color: ${SECONDARY_COLOR};
+    background-color: ${MAIN_COLOR};
     color: white;
     svg {
       fill: white;
@@ -174,7 +174,7 @@ const Box = styled.div`
     margin: 1rem 0 3rem 0;
   }
   button {
-    background-color: ${SECONDARY_COLOR};
+    background-color: ${MAIN_COLOR};
     color: white;
     border: none;
     font-size: 1.3rem;
@@ -225,17 +225,9 @@ const Result = () => {
   const { allInfo } = (location.state as IInfo) || [];
   const navigate = useNavigate();
 
-  const fetchData = async (): Promise<IData[]> => {
-    const KEY = process.env.REACT_APP_KEY;
-    const { data } = await axios.get(
-      `https://openapi.gg.go.kr/AbdmAnimalProtect?KEY=${KEY}&Type=json&pSize=1000`
-    );
-    return data.AbdmAnimalProtect[1].row;
-  };
-
   const { data } = useQuery({
-    queryKey: ["data"],
-    queryFn: fetchData,
+    queryKey: ["allData"],
+    queryFn: fetchAllData,
   });
 
   const filterSpecies = useCallback((value: string) => {
@@ -263,22 +255,54 @@ const Result = () => {
     return false;
   }, []);
   const filterColor = useCallback((value: string) => {
-    const whiteRegex = /(아이보리 | 크림 | 백 | 흰)/;
-    const blackRegex = /(검 | 흑)/;
-    const grayRegex = /(회백 | 쥐 | 검 | 흰 | 흑 | 백)/;
-    const brownRegex = /(갈 | 베이지 | 초코)/;
-    const goldRegex = /(노 | 황 | 크림 | 치즈)/;
-    const threeRegex = /(삼 | 줄 | 흰 | 검 | 갈 )/;
-    const fishRegex = /(고등어 | 반점)/;
-    const blackWhiteRegex = /(얼룩 | 검 | 흑 | 백 | 흰)/;
-    if (allInfo[3] === "흰색" && whiteRegex.test(value)) return true;
-    if (allInfo[3] === "검은색" && blackRegex.test(value)) return true;
-    if (allInfo[3] === "회색" && grayRegex.test(value)) return true;
-    if (allInfo[3] === "갈색" && brownRegex.test(value)) return true;
-    if (allInfo[3] === "금색" && goldRegex.test(value)) return true;
-    if (allInfo[3] === "삼색" && threeRegex.test(value)) return true;
-    if (allInfo[3] === "고등어색" && fishRegex.test(value)) return true;
-    if (allInfo[3] === "흑백" && blackWhiteRegex.test(value)) return true;
+    const whiteKeyword = ["아이보리", "크림", "백", "흰"];
+    const blackKeyword = ["검", "흑"];
+    const grayKeyword = ["회백", "쥐", "검", "흰", "흑", "백"];
+    const brownKeyword = ["갈", "베이지", "초코"];
+    const goldKeyword = ["노", "황", "크림", "치즈"];
+    const threeKeyword = ["삼", "줄", "흰", "검", "갈"];
+    const fishKeyword = ["고등어", "반점"];
+    const blackWhiteKeyword = ["얼룩", "검", "흑", "백", "흰"];
+    if (
+      allInfo[3] === "흰색" &&
+      whiteKeyword.some((keyword) => value.includes(keyword))
+    )
+      return true;
+    if (
+      allInfo[3] === "검은색" &&
+      blackKeyword.some((keyword) => value.includes(keyword))
+    )
+      return true;
+    if (
+      allInfo[3] === "회색" &&
+      grayKeyword.some((keyword) => value.includes(keyword))
+    )
+      return true;
+    if (
+      allInfo[3] === "갈색" &&
+      brownKeyword.some((keyword) => value.includes(keyword))
+    )
+      return true;
+    if (
+      allInfo[3] === "금색" &&
+      goldKeyword.some((keyword) => value.includes(keyword))
+    )
+      return true;
+    if (
+      allInfo[3] === "삼색" &&
+      threeKeyword.some((keyword) => value.includes(keyword))
+    )
+      return true;
+    if (
+      allInfo[3] === "고등어색" &&
+      fishKeyword.some((keyword) => value.includes(keyword))
+    )
+      return true;
+    if (
+      allInfo[3] === "흑백" &&
+      blackWhiteKeyword.some((keyword) => value.includes(keyword))
+    )
+      return true;
     return false;
   }, []);
 
@@ -291,7 +315,13 @@ const Result = () => {
       return true;
     });
     setFilteredData(newData || []);
-  }, [allInfo]);
+  }, [data]);
+
+  useEffect(() => {
+    if (!allInfo) {
+      navigate("/404");
+    }
+  }, []);
 
   const deleteTag = (value: string) => {
     return value.replace(/\[.*?\]/, "").trim();
@@ -309,13 +339,28 @@ const Result = () => {
     navigate("/detail", { state: { data } });
   };
 
+  const getRandomElements = (arr: IData[], count: number) => {
+    const result = []; // 결과 저장
+    const usedIndices = new Set(); // 중복 제거 위해 뽑힌 번호 저장
+
+    while (result.length < count) {
+      const randomIndex = Math.floor(Math.random() * arr.length);
+      // 중복 방지
+      if (!usedIndices.has(randomIndex)) {
+        result.push(arr[randomIndex]);
+        usedIndices.add(randomIndex);
+      }
+    }
+    return result;
+  };
+
   return (
     <Container>
       {filteredData.length !== 0 ? (
         <>
           <H2>당신의 운명의 반려동물을 찾았어요!</H2>
           <ItemArea>
-            {filteredData.slice(0, 3).map((value, index) => (
+            {getRandomElements(filteredData, 3).map((value, index) => (
               <Item key={index}>
                 <Photo $url={value.IMAGE_COURS}></Photo>
                 <div>

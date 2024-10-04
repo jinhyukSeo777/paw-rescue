@@ -2,13 +2,13 @@ import styled from "styled-components";
 import { DESKTOP } from "../utils/size";
 import { useCallback, useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
 import { IData } from "./Home";
-import { LEGION as LEGIONS } from "../components/home/Charts";
+import { LEGION as LEGIONS } from "../components/chart/Charts";
 import Dropdown from "../components/common/Dropdown";
 import ShowItems from "../components/common/ShowItems";
 import Pagenation from "../components/common/Pagenation";
 import SheltersMap, { IShelter } from "../components/common/SheltersMap";
+import { fetchAllData } from "../utils/fetchData";
 
 const Container = styled.main`
   width: 90%;
@@ -54,17 +54,9 @@ const Shelter = () => {
   const [shelters, setShelters] = useState<IShelter[]>([]);
   const [shelterName, setShelterName] = useState("");
 
-  const fetchData = async (): Promise<IData[]> => {
-    const KEY = process.env.REACT_APP_KEY;
-    const { data } = await axios.get(
-      `https://openapi.gg.go.kr/AbdmAnimalProtect?KEY=${KEY}&Type=json&pSize=1000&SHTER_NM=${shelterName}`
-    );
-    return data.AbdmAnimalProtect[1].row;
-  };
-
   const { data } = useQuery({
-    queryKey: ["data", shelterName],
-    queryFn: fetchData,
+    queryKey: ["allData"],
+    queryFn: fetchAllData,
   });
 
   useEffect(() => {

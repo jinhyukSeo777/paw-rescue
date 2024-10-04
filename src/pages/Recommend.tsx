@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { DESKTOP, PHONE } from "../utils/size";
-import { SECONDARY_COLOR } from "../utils/color";
+import { MAIN_COLOR } from "../utils/color";
 import { useEffect, useState } from "react";
 import ChooseSpecies from "../components/question/ChooseSpecies";
 import ChooseSex from "../components/question/ChooseSex";
@@ -30,7 +30,7 @@ const BtnArea = styled.div`
 const Btn = styled.button<{ $disable?: boolean }>`
   width: 11rem;
   height: 3rem;
-  background-color: ${SECONDARY_COLOR};
+  background-color: ${MAIN_COLOR};
   color: white;
   border: none;
   border-radius: 2rem;
