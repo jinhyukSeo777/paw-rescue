@@ -2,9 +2,9 @@ import styled from "styled-components";
 import { DESKTOP, PHONE, TABLET } from "../utils/size";
 import { ReactComponent as MyIcon } from "../assets/icons/paw.svg";
 import { ReactComponent as MyBg } from "../assets/images/bg.svg";
-import { MAIN_COLOR } from "../utils/color";
-import LastOneDay from "../components/home/LastOneDay";
-import Charts from "../components/home/Charts";
+import { IMPACT_COLOR } from "../utils/color";
+import LastOneDay from "../components/common/LastOneDay";
+import Charts from "../components/chart/Charts";
 
 const Container = styled.main`
   width: 90%;
@@ -20,7 +20,7 @@ const Container = styled.main`
   }
 `;
 
-const Banner = styled.section`
+const BannerArea = styled.section`
   width: 100%;
   height: 50rem;
   display: flex;
@@ -29,7 +29,7 @@ const Banner = styled.section`
   position: relative;
 `;
 
-const BannerArea = styled.div`
+const BannerText = styled.div`
   z-index: 9;
   div {
     width: 80%;
@@ -38,7 +38,7 @@ const BannerArea = styled.div`
       font-weight: bold;
       line-height: 4rem;
       &:nth-child(2) {
-        color: ${MAIN_COLOR};
+        color: ${IMPACT_COLOR};
       }
     }
   }
@@ -49,7 +49,7 @@ const BannerArea = styled.div`
     line-height: 2rem;
   }
   button {
-    background-color: ${MAIN_COLOR};
+    background-color: ${IMPACT_COLOR};
     border: none;
     color: white;
     padding: 0.8rem;
@@ -97,7 +97,7 @@ const BannerArea = styled.div`
   }
 `;
 
-const StyledBg = styled(MyBg)`
+const BannerBg = styled(MyBg)`
   height: 640px;
   @media (max-width: ${TABLET}) {
     position: absolute;
@@ -135,8 +135,8 @@ export interface IData {
 const Home = () => {
   return (
     <Container>
-      <Banner>
-        <BannerArea>
+      <BannerArea>
+        <BannerText>
           <div>
             <span>버려진 아이들과 당신의</span>
             <span>운명적 만남</span>
@@ -150,9 +150,9 @@ const Home = () => {
             나의 반려동물 찾기
             <MyIcon style={{ marginLeft: "0.3rem" }} />
           </button>
-        </BannerArea>
-        <StyledBg />
-      </Banner>
+        </BannerText>
+        <BannerBg />
+      </BannerArea>
       <LastOneDay />
       <Charts />
     </Container>

@@ -2,7 +2,7 @@ import { useLocation } from "react-router-dom";
 import { IData } from "./Home";
 import styled from "styled-components";
 import { DESKTOP } from "../utils/size";
-import { SECONDARY_COLOR } from "../utils/color";
+import { MAIN_COLOR } from "../utils/color";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useState } from "react";
 import { faBookmark as FullBookmark } from "@fortawesome/free-solid-svg-icons";
@@ -29,7 +29,7 @@ const H2 = styled.h2`
   font-size: 2rem;
   span {
     margin-right: 0.6rem;
-    color: ${SECONDARY_COLOR};
+    color: ${MAIN_COLOR};
     &:first-child {
       cursor: pointer;
       position: relative;
@@ -92,7 +92,7 @@ const Info = styled.div`
     margin-right: 1.5rem;
     text-align: center;
     align-content: center;
-    background-color: ${SECONDARY_COLOR};
+    background-color: ${MAIN_COLOR};
     border-radius: 2rem;
     color: white;
   }
@@ -181,12 +181,12 @@ const Detail = () => {
         <span onClick={handleLike}>
           {isLiked ? (
             <FontAwesomeIcon
-              style={{ color: SECONDARY_COLOR }}
+              style={{ color: MAIN_COLOR }}
               icon={FullBookmark}
             />
           ) : (
             <FontAwesomeIcon
-              style={{ color: SECONDARY_COLOR }}
+              style={{ color: MAIN_COLOR }}
               icon={ImptyBookmark}
             />
           )}
