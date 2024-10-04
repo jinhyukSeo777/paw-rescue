@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { g3, SECONDARY_COLOR } from "../../utils/color";
+import { g3, MAIN_COLOR } from "../../utils/color";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Navigation } from "swiper/modules";
 import "swiper/css";
@@ -60,7 +60,7 @@ const CustomNavButton = styled.div`
   z-index: 9;
   font-size: 2.5rem;
   &:hover {
-    color: ${SECONDARY_COLOR};
+    color: ${MAIN_COLOR};
   }
 `;
 
@@ -91,10 +91,10 @@ const LastOneDay = () => {
   const fetchData = async (): Promise<IData[]> => {
     const KEY = process.env.REACT_APP_KEY;
     const tomorrow = getTomorrow();
-    const formattedDate = formatDateToYYYYMMDD(tomorrow);
+    const formattedTomorrow = formatDateToYYYYMMDD(tomorrow);
 
     const { data } = await axios.get(
-      `https://openapi.gg.go.kr/AbdmAnimalProtect?KEY=${KEY}&PBLANC_END_DE=${formattedDate}&Type=json&pSize=20`
+      `https://openapi.gg.go.kr/AbdmAnimalProtect?KEY=${KEY}&PBLANC_END_DE=${formattedTomorrow}&Type=json&pSize=20`
     );
     return data.AbdmAnimalProtect[1].row;
   };

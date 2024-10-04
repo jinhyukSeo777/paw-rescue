@@ -1,12 +1,11 @@
 import styled from "styled-components";
 import { CHART_COLOR, MAIN_COLOR } from "../../utils/color";
-import { IData } from "../../pages/Home";
-import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
-import DonutChart from "../common/DonutChart";
-import BarChart from "../common/BarChart";
+import DonutChart from "./DonutChart";
+import BarChart from "./BarChart";
 import { TABLET } from "../../utils/size";
+import { fetchAllData } from "../../utils/fetchData";
 
 const Container = styled.section`
   width: 100%;
@@ -70,17 +69,9 @@ const Charts = () => {
   const [stateCount, setStateCount] = useState<number[]>([]);
   const [legionCount, setLegionCount] = useState<number[]>([]);
 
-  const fetchData = async (): Promise<IData[]> => {
-    const KEY = process.env.REACT_APP_KEY;
-    const { data } = await axios.get(
-      `https://openapi.gg.go.kr/AbdmAnimalProtect?KEY=${KEY}&Type=json&pSize=1000`
-    );
-    return data.AbdmAnimalProtect[1].row;
-  };
-
   const { data } = useQuery({
-    queryKey: ["data"],
-    queryFn: fetchData,
+    queryKey: ["allData"],
+    queryFn: fetchAllData,
   });
 
   useEffect(() => {
