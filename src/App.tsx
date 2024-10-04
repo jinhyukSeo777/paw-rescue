@@ -8,6 +8,7 @@ import MyPet from "./pages/MyPet";
 import Detail from "./pages/Detail";
 import Recommend from "./pages/Recommend";
 import Result from "./pages/Result";
+import Error from "./pages/404";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
         <Route path="/detail" element={<Detail />} />
         <Route path="/recommend" element={<Recommend />} />
         <Route path="/result" element={<Result />} />
+        <Route path="/404" element={<Error />} />
       </Routes>
     </>
   );
