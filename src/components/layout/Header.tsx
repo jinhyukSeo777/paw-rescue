@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { DESKTOP, PHONE, TABLET } from "../../utils/size";
 import { ReactComponent as MyLogo } from "../../assets/icons/logo.svg";
-import { g1, SECONDARY_COLOR } from "../../utils/color";
+import { g1, MAIN_COLOR } from "../../utils/color";
 import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
@@ -69,8 +69,8 @@ const Gnb = styled.ul<{ $active: boolean }>`
       margin-top: 1rem;
       width: 7rem;
       text-align: center;
-      color: ${SECONDARY_COLOR};
-      border: 1px solid ${SECONDARY_COLOR};
+      color: ${MAIN_COLOR};
+      border: 1px solid ${MAIN_COLOR};
     }
   }
 `;
@@ -79,9 +79,9 @@ const Li = styled.li<{ $currentUrl: boolean }>`
   padding: 1rem;
   border-radius: 2rem;
   cursor: pointer;
-  color: ${(props) => (props.$currentUrl ? `${SECONDARY_COLOR}` : null)};
+  color: ${(props) => (props.$currentUrl ? `${MAIN_COLOR}` : null)};
   &:hover {
-    background-color: ${SECONDARY_COLOR};
+    background-color: ${MAIN_COLOR};
     color: white;
   }
 `;
@@ -132,7 +132,7 @@ const HamBtn = styled.button<{ $active: boolean }>`
     span::before,
     span::after {
       background-color: ${(props) =>
-        props.$active ? `${SECONDARY_COLOR}` : `${g1}`};
+        props.$active ? `${MAIN_COLOR}` : `${g1}`};
     }
   }
 `;

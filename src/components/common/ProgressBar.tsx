@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { g4, SECONDARY_COLOR } from "../../utils/color";
+import { g4, MAIN_COLOR } from "../../utils/color";
 
 const ContainerStyle = styled.div`
   width: 100%;
@@ -12,7 +12,7 @@ const ContainerStyle = styled.div`
 const FillerStyle = styled.div<{ $index: number }>`
   width: calc(100% / 4 * ${(props) => props.$index + 1});
   height: 1.2rem;
-  background-color: ${SECONDARY_COLOR};
+  background-color: ${MAIN_COLOR};
 `;
 
 interface IProps {

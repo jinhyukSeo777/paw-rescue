@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { IData } from "../../pages/Home";
-import { SECONDARY_COLOR } from "../../utils/color";
+import { MAIN_COLOR } from "../../utils/color";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBookmark as FullBookmark } from "@fortawesome/free-solid-svg-icons";
 import { faBookmark as ImptyBookmark } from "@fortawesome/free-regular-svg-icons";
@@ -56,7 +56,7 @@ const State = styled.div`
   top: 0.5rem;
   left: 0.5rem;
   padding: 0.5rem;
-  background-color: ${SECONDARY_COLOR};
+  background-color: ${MAIN_COLOR};
   color: white;
   border-radius: 1rem;
   font-size: 0.8rem;
@@ -119,12 +119,12 @@ const Item = ({ data, hoverEffect }: IProps) => {
           <span onClick={handleLike}>
             {isLiked ? (
               <FontAwesomeIcon
-                style={{ color: SECONDARY_COLOR }}
+                style={{ color: MAIN_COLOR }}
                 icon={FullBookmark}
               />
             ) : (
               <FontAwesomeIcon
-                style={{ color: SECONDARY_COLOR }}
+                style={{ color: MAIN_COLOR }}
                 icon={ImptyBookmark}
               />
             )}

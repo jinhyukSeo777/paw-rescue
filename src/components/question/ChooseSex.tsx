@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { g4, SECONDARY_COLOR } from "../../utils/color";
+import { g4, MAIN_COLOR } from "../../utils/color";
 import { ReactComponent as MyGold } from "../../assets/icons/gold.svg";
 import { ReactComponent as MyDiamond } from "../../assets/icons/diamond.svg";
 import { PHONE } from "../../utils/size";
@@ -52,9 +52,9 @@ const Box = styled.div<{ $selected: boolean }>`
   ${(props) =>
     props.$selected &&
     `
-    background-color: ${SECONDARY_COLOR};
+    background-color: ${MAIN_COLOR};
     color: white;
-    border-color: ${SECONDARY_COLOR};
+    border-color: ${MAIN_COLOR};
   `}
   svg {
     width: 90px;

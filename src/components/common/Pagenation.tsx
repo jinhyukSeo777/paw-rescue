@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
-import { g2, SECONDARY_COLOR } from "../../utils/color";
+import { g2, MAIN_COLOR } from "../../utils/color";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft, faArrowRight } from "@fortawesome/free-solid-svg-icons";
 
@@ -29,7 +29,7 @@ const Arrow = styled.div`
     transform: translate(calc(-50% + 160px), -50%);
   }
   &:hover {
-    color: ${SECONDARY_COLOR};
+    color: ${MAIN_COLOR};
   }
 `;
 
@@ -49,10 +49,8 @@ const Btn = styled.li<{ $isMatch: boolean }>`
   font-size: 0.9rem;
   font-weight: bold;
   margin: 0 0.3rem;
-  background-color: ${(props) =>
-    props.$isMatch ? `${SECONDARY_COLOR}` : null};
-  border: 1px solid
-    ${(props) => (props.$isMatch ? `${SECONDARY_COLOR}` : `${g2}`)};
+  background-color: ${(props) => (props.$isMatch ? `${MAIN_COLOR}` : null)};
+  border: 1px solid ${(props) => (props.$isMatch ? `${MAIN_COLOR}` : `${g2}`)};
   color: ${(props) => (props.$isMatch ? "white" : null)};
 `;
 
@@ -76,7 +74,7 @@ const Pagenation = ({ page, setPage, totalCount }: IProps) => {
     if (group === totalGroups) return;
     setGroup((prev) => prev + 1);
   };
-  const chagePage = (value: number) => {
+  const changePage = (value: number) => {
     setPage(value);
   };
 
@@ -103,7 +101,7 @@ const Pagenation = ({ page, setPage, totalCount }: IProps) => {
             return (
               <Btn
                 key={index}
-                onClick={() => chagePage(value)}
+                onClick={() => changePage(value)}
                 $isMatch={value === page}
               >
                 {value}

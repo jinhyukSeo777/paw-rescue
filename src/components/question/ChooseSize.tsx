@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { g4, SECONDARY_COLOR } from "../../utils/color";
+import { g4, MAIN_COLOR } from "../../utils/color";
 import { ReactComponent as MyKey } from "../../assets/icons/key.svg";
 import { ReactComponent as MyCarrier } from "../../assets/icons/carrier.svg";
 import { ReactComponent as MyCar } from "../../assets/icons/car.svg";
@@ -51,9 +51,9 @@ const Box = styled.div<{ $selected: boolean }>`
   ${(props) =>
     props.$selected &&
     `
-    background-color: ${SECONDARY_COLOR};
+    background-color: ${MAIN_COLOR};
     color: white;
-    border-color: ${SECONDARY_COLOR};
+    border-color: ${MAIN_COLOR};
   `}
   @media (max-width: ${PHONE}) {
     width: 150px;

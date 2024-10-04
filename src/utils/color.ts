@@ -1,5 +1,5 @@
-export const MAIN_COLOR = "#008BF0";
-export const SECONDARY_COLOR = "#47B2FF";
+export const IMPACT_COLOR = "#008BF0";
+export const MAIN_COLOR = "#47B2FF";
 export const YELLOW = "#FFF6D6";
 export const g1 = "#323232";
 export const g2 = "#7F7F7F";
