@@ -65,6 +65,10 @@ const Recommend = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
+    localStorage.removeItem("filterdData");
+  });
+
+  useEffect(() => {
     if (index === 4) {
       navigate("/result", { state: { allInfo } });
     }

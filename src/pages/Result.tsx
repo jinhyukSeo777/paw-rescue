@@ -219,7 +219,7 @@ interface IInfo {
 }
 
 const Result = () => {
-  const [filteredData, setFilteredData] = useState<IData[]>([]);
+  const [result, setResult] = useState<IData[]>([]);
   const [modalOpen, setModalOpen] = useState(false);
   const location = useLocation();
   const { allInfo } = (location.state as IInfo) || [];
@@ -307,16 +307,27 @@ const Result = () => {
   }, []);
 
   useEffect(() => {
-    const newData = data?.filter((value) => {
+    const storedItems = localStorage.getItem("filterdData");
+    // 페이지를 재방문할 경우
+    if (storedItems) {
+      setResult(JSON.parse(storedItems));
+      return;
+    }
+    // 페이지를 처음 방문할 경우
+    const filterdData = data?.filter((value) => {
       if (!filterSpecies(value.SPECIES_NM)) return false;
       if (!filterSex(value.SEX_NM)) return false;
       if (!filterSize(value.BDWGH_INFO)) return false;
       if (!filterColor(value.COLOR_NM)) return false;
       return true;
     });
-    setFilteredData(newData || []);
+    if (!filterdData) return;
+    const result = getRandomElements(filterdData, 3);
+    setResult(result);
+    localStorage.setItem("filterdData", JSON.stringify(result));
   }, [data]);
 
+  // 설문조사를 건너띄고 온 유저 404로 보내기
   useEffect(() => {
     if (!allInfo) {
       navigate("/404");
@@ -339,6 +350,7 @@ const Result = () => {
     navigate("/detail", { state: { data } });
   };
 
+  // 필터링 통과한 배열에서 3개의 요소 선택하는 함수
   const getRandomElements = (arr: IData[], count: number) => {
     const result = []; // 결과 저장
     const usedIndices = new Set(); // 중복 제거 위해 뽑힌 번호 저장
@@ -356,11 +368,11 @@ const Result = () => {
 
   return (
     <Container>
-      {filteredData.length !== 0 ? (
+      {result.length !== 0 ? (
         <>
           <H2>당신의 운명의 반려동물을 찾았어요!</H2>
           <ItemArea>
-            {getRandomElements(filteredData, 3).map((value, index) => (
+            {result.map((value, index) => (
               <Item key={index}>
                 <Photo $url={value.IMAGE_COURS}></Photo>
                 <div>
