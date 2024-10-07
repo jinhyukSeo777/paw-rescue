@@ -364,6 +364,8 @@ const Result = () => {
   };
 
   const getRandomElements = (arr: IData[], count: number) => {
+    if (arr.length < count) return [];
+
     const result = [];
     const usedIndices = new Set(); //중복 제거 위해 뽑힌 번호 저장
 
@@ -399,7 +401,7 @@ const Result = () => {
           </ItemArea>
           <BtnArea>
             <Btn onClick={() => setModalOpen(true)}>결과 설명듣기</Btn>
-            <Btn onClick={() => navigate("/recommend")}>테스트 다시하기</Btn>
+            <Btn onClick={() => navigate("/match")}>테스트 다시하기</Btn>
           </BtnArea>
           {modalOpen && <Solution setModalOpen={setModalOpen} />}
         </>
