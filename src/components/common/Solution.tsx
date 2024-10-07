@@ -48,7 +48,7 @@ interface IProps {
   setModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const Answer = ({ setModalOpen }: IProps) => {
+const Solution = ({ setModalOpen }: IProps) => {
   return (
     <Modal>
       <Container>
@@ -76,4 +76,4 @@ const Answer = ({ setModalOpen }: IProps) => {
   );
 };
 
-export default Answer;
+export default Solution;

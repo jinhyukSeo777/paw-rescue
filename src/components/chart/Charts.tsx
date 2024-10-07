@@ -66,8 +66,8 @@ export const LEGION = [
 ];
 
 const Charts = () => {
-  const [stateCount, setStateCount] = useState<number[]>([]);
-  const [legionCount, setLegionCount] = useState<number[]>([]);
+  const [stateCount, setStateCount] = useState<number[]>([]); //상태별 동물 숫자 저장
+  const [legionCount, setLegionCount] = useState<number[]>([]); //시군구별 동물 숫자 저장
 
   const { data } = useQuery({
     queryKey: ["allData"],
@@ -77,12 +77,14 @@ const Charts = () => {
   useEffect(() => {
     const stateCount = new Array(7).fill(0);
     const legionCount = new Array(24).fill(0);
+    //상태별 숫자 계산
     data?.forEach((value) => {
       STATE.forEach((state, index) => {
         if (value.STATE_NM.includes(state)) {
           stateCount[index]++;
         }
       });
+      //시군구별 숫자 계산
       LEGION.forEach((legion, index) => {
         if (value.SIGUN_NM.includes(legion)) {
           legionCount[index]++;

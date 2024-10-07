@@ -39,7 +39,7 @@ const BarChart = ({ data }: IProps) => {
           indexAxis: "y",
           plugins: {
             tooltip: {
-              enabled: true,
+              enabled: true, //hover시 툴팁
               callbacks: {
                 label: function (tooltipItem) {
                   const label = tooltipItem.label || "";
@@ -49,7 +49,7 @@ const BarChart = ({ data }: IProps) => {
               },
             },
             legend: {
-              display: false, // 범례 표시
+              display: false, //범례 표시
             },
           },
         }}

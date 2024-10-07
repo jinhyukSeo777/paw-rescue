@@ -12,6 +12,7 @@ const Container = styled.div`
   justify-content: center;
   align-items: center;
 `;
+
 interface IProps {
   children: React.ReactNode;
 }

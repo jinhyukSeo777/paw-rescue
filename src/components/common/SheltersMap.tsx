@@ -32,6 +32,17 @@ const SheltersMap = ({ shelters, setShelterName }: IProps) => {
     },
   };
 
+  const handleMarkerClick = (marker: IShelter) => {
+    if (!setShelterName) return;
+    setShelterName(marker.SHTER_NM);
+    const bounds = new kakao.maps.LatLngBounds();
+    bounds.extend(
+      new kakao.maps.LatLng(+marker.REFINE_WGS84_LAT, +marker.REFINE_WGS84_LOGT)
+    );
+    map.setBounds(bounds);
+  };
+
+  //초기 지도 설정
   useEffect(() => {
     if (!map) return;
     const bounds = new kakao.maps.LatLngBounds();
@@ -49,16 +60,6 @@ const SheltersMap = ({ shelters, setShelterName }: IProps) => {
     setMarkers(markers);
     map.setBounds(bounds);
   }, [shelters, map]);
-
-  const handleClick = (marker: IShelter) => {
-    if (!setShelterName) return;
-    setShelterName(marker.SHTER_NM);
-    const bounds = new kakao.maps.LatLngBounds();
-    bounds.extend(
-      new kakao.maps.LatLng(+marker.REFINE_WGS84_LAT, +marker.REFINE_WGS84_LOGT)
-    );
-    map.setBounds(bounds);
-  };
 
   return (
     <Container>
@@ -82,7 +83,7 @@ const SheltersMap = ({ shelters, setShelterName }: IProps) => {
               lng: +marker.REFINE_WGS84_LOGT,
             }}
             image={markerImage}
-            onClick={() => handleClick(marker)}
+            onClick={() => handleMarkerClick(marker)}
           ></MapMarker>
         ))}
       </Map>

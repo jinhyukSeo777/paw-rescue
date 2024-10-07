@@ -38,7 +38,7 @@ const DonutChart = ({ data }: IProps) => {
         options={{
           plugins: {
             tooltip: {
-              enabled: true,
+              enabled: true, //hover시 툴팁
               callbacks: {
                 label: function (tooltipItem) {
                   const label = tooltipItem.label || "";

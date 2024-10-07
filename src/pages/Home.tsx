@@ -149,7 +149,7 @@ const Home = () => {
             지금 당신의 따뜻한 마음을 기다리는 친구들이 있습니다. 유기동물
             입양으로 가족이 되어주세요.
           </p>
-          <button onClick={() => navigate("/recommend")}>
+          <button onClick={() => navigate("/match")}>
             나의 반려동물 찾기
             <MyIcon style={{ marginLeft: "0.3rem" }} />
           </button>

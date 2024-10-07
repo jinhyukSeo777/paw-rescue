@@ -8,8 +8,9 @@ import { useEffect, useState } from "react";
 import { faBookmark as FullBookmark } from "@fortawesome/free-solid-svg-icons";
 import { faBookmark as ImptyBookmark } from "@fortawesome/free-regular-svg-icons";
 import { updateMyPet } from "../contexts/counterSlice";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import SheltersMap from "../components/common/SheltersMap";
+import { RootState } from "../contexts/store";
 
 const Container = styled.main`
   width: 90%;
@@ -135,34 +136,20 @@ const Detail = () => {
       REFINE_WGS84_LOGT: data.REFINE_WGS84_LOGT,
     },
   ];
-
-  const getLikeList = () => {
-    const obj = localStorage.getItem("like");
-    const likeList: IData[] = obj ? JSON.parse(obj) : null;
-    return likeList || [];
-  };
-
-  useEffect(() => {
-    const likeList = getLikeList();
-    const isIn = likeList.some(
-      (value) => value.ABDM_IDNTFY_NO === data.ABDM_IDNTFY_NO
-    );
-    setIsLiked(isIn);
-  }, [data.ABDM_IDNTFY_NO]);
+  const likeList = useSelector((state: RootState) => state.counter.myPet);
 
   const handleLike = () => {
-    const likeList = getLikeList();
     if (isLiked) {
+      //좋아요 목록에서 제거
       const newList = likeList.filter(
         (value) => value.ABDM_IDNTFY_NO !== data.ABDM_IDNTFY_NO
       );
-      localStorage.setItem("like", JSON.stringify(newList));
       dispatch(updateMyPet(newList));
       setIsLiked(false);
     } else {
-      likeList.push(data);
-      localStorage.setItem("like", JSON.stringify(likeList));
-      dispatch(updateMyPet(likeList));
+      //좋아요 목록에 추가
+      const newList = [...likeList, data];
+      dispatch(updateMyPet(newList));
       setIsLiked(true);
     }
   };
@@ -171,9 +158,15 @@ const Detail = () => {
     const year = dateString.substring(0, 4);
     const month = dateString.substring(4, 6);
     const day = dateString.substring(6, 8);
-
     return `${year}년 ${month}월 ${day}일`;
   };
+
+  useEffect(() => {
+    const isIn = likeList.some(
+      (value) => value.ABDM_IDNTFY_NO === data.ABDM_IDNTFY_NO
+    );
+    setIsLiked(isIn);
+  }, [data.ABDM_IDNTFY_NO, likeList]);
 
   return (
     <Container>

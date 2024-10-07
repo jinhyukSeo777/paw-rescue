@@ -75,11 +75,11 @@ const Gnb = styled.ul<{ $active: boolean }>`
   }
 `;
 
-const Li = styled.li<{ $currentUrl: boolean }>`
+const Li = styled.li<{ $isCurrentUrl: boolean }>`
   padding: 1rem;
   border-radius: 2rem;
   cursor: pointer;
-  color: ${(props) => (props.$currentUrl ? `${MAIN_COLOR}` : null)};
+  color: ${(props) => (props.$isCurrentUrl ? `${MAIN_COLOR}` : null)};
   &:hover {
     background-color: ${MAIN_COLOR};
     color: white;
@@ -159,25 +159,25 @@ const Header = () => {
         <Gnb $active={isHamActive}>
           <Li
             onClick={() => changeUrl("/list")}
-            $currentUrl={currentUrl === "/list"}
+            $isCurrentUrl={currentUrl === "/list"}
           >
             유기동물 보기
           </Li>
           <Li
-            onClick={() => changeUrl("/recommend")}
-            $currentUrl={currentUrl === "/aa"}
+            onClick={() => changeUrl("/match")}
+            $isCurrentUrl={currentUrl === "/match"}
           >
             털친소
           </Li>
           <Li
             onClick={() => changeUrl("/shelter")}
-            $currentUrl={currentUrl === "/shelter"}
+            $isCurrentUrl={currentUrl === "/shelter"}
           >
             주변보호소 찾기
           </Li>
           <Li
             onClick={() => changeUrl("/mypet")}
-            $currentUrl={currentUrl === "/bb"}
+            $isCurrentUrl={currentUrl === "/bb"}
           >
             나의 관심동물
           </Li>

@@ -7,7 +7,7 @@ import styled from "styled-components";
 import { g1, g2, MAIN_COLOR } from "../utils/color";
 import { ReactComponent as MyPaw } from "../assets/icons/paw.svg";
 import { ReactComponent as MyBg } from "../assets/images/bg.svg";
-import Answer from "../components/common/Answer";
+import Solution from "../components/common/Solution";
 import { fetchAllData } from "../utils/fetchData";
 
 const Container = styled.main`
@@ -152,7 +152,7 @@ const Btn = styled.button`
   }
 `;
 
-const Box = styled.div`
+const NoResultBox = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -230,90 +230,103 @@ const Result = () => {
     queryFn: fetchAllData,
   });
 
-  const filterSpecies = useCallback((value: string) => {
-    if (allInfo[0] === "강아지" && value.includes("개")) return true;
-    if (allInfo[0] === "고양이" && value.includes("고양이")) return true;
-    if (
-      allInfo[0] === "그외" &&
-      !value.includes("개") &&
-      !value.includes("고양이")
-    )
-      return true;
-    return false;
-  }, []);
-  const filterSex = useCallback((value: string) => {
-    if (allInfo[1] === "남아" && value === "M") return true;
-    if (allInfo[1] === "여아" && value === "F") return true;
-    return false;
-  }, []);
-  const filterSize = useCallback((value: string) => {
-    const weight = +value.replace("(Kg)", "");
-    if (allInfo[2] === "3" && weight <= 3) return true;
-    if (allInfo[2] === "5" && 3 < weight && weight <= 5) return true;
-    if (allInfo[2] === "10" && 5 < weight && weight <= 10) return true;
-    if (allInfo[2] === "그외" && 10 < weight) return true;
-    return false;
-  }, []);
-  const filterColor = useCallback((value: string) => {
-    const whiteKeyword = ["아이보리", "크림", "백", "흰"];
-    const blackKeyword = ["검", "흑"];
-    const grayKeyword = ["회백", "쥐", "검", "흰", "흑", "백"];
-    const brownKeyword = ["갈", "베이지", "초코"];
-    const goldKeyword = ["노", "황", "크림", "치즈"];
-    const threeKeyword = ["삼", "줄", "흰", "검", "갈"];
-    const fishKeyword = ["고등어", "반점"];
-    const blackWhiteKeyword = ["얼룩", "검", "흑", "백", "흰"];
-    if (
-      allInfo[3] === "흰색" &&
-      whiteKeyword.some((keyword) => value.includes(keyword))
-    )
-      return true;
-    if (
-      allInfo[3] === "검은색" &&
-      blackKeyword.some((keyword) => value.includes(keyword))
-    )
-      return true;
-    if (
-      allInfo[3] === "회색" &&
-      grayKeyword.some((keyword) => value.includes(keyword))
-    )
-      return true;
-    if (
-      allInfo[3] === "갈색" &&
-      brownKeyword.some((keyword) => value.includes(keyword))
-    )
-      return true;
-    if (
-      allInfo[3] === "금색" &&
-      goldKeyword.some((keyword) => value.includes(keyword))
-    )
-      return true;
-    if (
-      allInfo[3] === "삼색" &&
-      threeKeyword.some((keyword) => value.includes(keyword))
-    )
-      return true;
-    if (
-      allInfo[3] === "고등어색" &&
-      fishKeyword.some((keyword) => value.includes(keyword))
-    )
-      return true;
-    if (
-      allInfo[3] === "흑백" &&
-      blackWhiteKeyword.some((keyword) => value.includes(keyword))
-    )
-      return true;
-    return false;
-  }, []);
+  const filterSpecies = useCallback(
+    (value: string) => {
+      if (allInfo[0] === "강아지" && value.includes("개")) return true;
+      if (allInfo[0] === "고양이" && value.includes("고양이")) return true;
+      if (
+        allInfo[0] === "그외" &&
+        !value.includes("개") &&
+        !value.includes("고양이")
+      )
+        return true;
+      return false;
+    },
+    [allInfo]
+  );
+  const filterSex = useCallback(
+    (value: string) => {
+      if (allInfo[1] === "남아" && value === "M") return true;
+      if (allInfo[1] === "여아" && value === "F") return true;
+      return false;
+    },
+    [allInfo]
+  );
+  const filterSize = useCallback(
+    (value: string) => {
+      const weight = +value.replace("(Kg)", "");
+      if (allInfo[2] === "3" && weight <= 3) return true;
+      if (allInfo[2] === "5" && 3 < weight && weight <= 5) return true;
+      if (allInfo[2] === "10" && 5 < weight && weight <= 10) return true;
+      if (allInfo[2] === "그외" && 10 < weight) return true;
+      return false;
+    },
+    [allInfo]
+  );
+  const filterColor = useCallback(
+    (value: string) => {
+      const whiteKeyword = ["아이보리", "크림", "백", "흰"];
+      const blackKeyword = ["검", "흑"];
+      const grayKeyword = ["회백", "쥐", "검", "흰", "흑", "백"];
+      const brownKeyword = ["갈", "베이지", "초코"];
+      const goldKeyword = ["노", "황", "크림", "치즈"];
+      const threeKeyword = ["삼", "줄", "흰", "검", "갈"];
+      const fishKeyword = ["고등어", "반점"];
+      const blackWhiteKeyword = ["얼룩", "검", "흑", "백", "흰"];
+      if (
+        allInfo[3] === "흰색" &&
+        whiteKeyword.some((keyword) => value.includes(keyword))
+      )
+        return true;
+      if (
+        allInfo[3] === "검은색" &&
+        blackKeyword.some((keyword) => value.includes(keyword))
+      )
+        return true;
+      if (
+        allInfo[3] === "회색" &&
+        grayKeyword.some((keyword) => value.includes(keyword))
+      )
+        return true;
+      if (
+        allInfo[3] === "갈색" &&
+        brownKeyword.some((keyword) => value.includes(keyword))
+      )
+        return true;
+      if (
+        allInfo[3] === "금색" &&
+        goldKeyword.some((keyword) => value.includes(keyword))
+      )
+        return true;
+      if (
+        allInfo[3] === "삼색" &&
+        threeKeyword.some((keyword) => value.includes(keyword))
+      )
+        return true;
+      if (
+        allInfo[3] === "고등어색" &&
+        fishKeyword.some((keyword) => value.includes(keyword))
+      )
+        return true;
+      if (
+        allInfo[3] === "흑백" &&
+        blackWhiteKeyword.some((keyword) => value.includes(keyword))
+      )
+        return true;
+      return false;
+    },
+    [allInfo]
+  );
 
+  //조건에 맞는 동물 찾기
   useEffect(() => {
     const storedItems = localStorage.getItem("filterdData");
-    // 페이지를 재방문할 경우
+    //페이지를 재방문할 경우 ex)새로고침, 뒤로가기 버튼
     if (storedItems) {
       setResult(JSON.parse(storedItems));
       return;
     }
-    // 페이지를 처음 방문할 경우
+    //페이지를 처음 방문할 경우
     const filterdData = data?.filter((value) => {
       if (!filterSpecies(value.SPECIES_NM)) return false;
       if (!filterSex(value.SEX_NM)) return false;
@@ -325,14 +338,14 @@ const Result = () => {
     const result = getRandomElements(filterdData, 3);
     setResult(result);
     localStorage.setItem("filterdData", JSON.stringify(result));
-  }, [data]);
+  }, [data, filterColor, filterSex, filterSize, filterSpecies]);
 
   // 설문조사를 건너띄고 온 유저 404로 보내기
   useEffect(() => {
     if (!allInfo) {
       navigate("/404");
     }
-  }, []);
+  }, [allInfo, navigate]);
 
   const deleteTag = (value: string) => {
     return value.replace(/\[.*?\]/, "").trim();
@@ -350,14 +363,13 @@ const Result = () => {
     navigate("/detail", { state: { data } });
   };
 
-  // 필터링 통과한 배열에서 3개의 요소 선택하는 함수
   const getRandomElements = (arr: IData[], count: number) => {
-    const result = []; // 결과 저장
-    const usedIndices = new Set(); // 중복 제거 위해 뽑힌 번호 저장
+    const result = [];
+    const usedIndices = new Set(); //중복 제거 위해 뽑힌 번호 저장
 
     while (result.length < count) {
       const randomIndex = Math.floor(Math.random() * arr.length);
-      // 중복 방지
+      //중복 방지
       if (!usedIndices.has(randomIndex)) {
         result.push(arr[randomIndex]);
         usedIndices.add(randomIndex);
@@ -389,10 +401,10 @@ const Result = () => {
             <Btn onClick={() => setModalOpen(true)}>결과 설명듣기</Btn>
             <Btn onClick={() => navigate("/recommend")}>테스트 다시하기</Btn>
           </BtnArea>
-          {modalOpen && <Answer setModalOpen={setModalOpen} />}
+          {modalOpen && <Solution setModalOpen={setModalOpen} />}
         </>
       ) : (
-        <Box>
+        <NoResultBox>
           <MyBg />
           <span>운명의 반려동물을 찾지 못 했어요</span>
           <p>
@@ -402,7 +414,7 @@ const Result = () => {
           <button onClick={() => navigate("/list")}>
             유기동물 보기 <MyPaw />
           </button>
-        </Box>
+        </NoResultBox>
       )}
     </Container>
   );

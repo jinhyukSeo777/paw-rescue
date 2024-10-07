@@ -70,17 +70,20 @@ const Pagenation = ({ page, setPage, totalCount }: IProps) => {
     if (group === 1) return;
     setGroup((prev) => prev - 1);
   };
+
   const goNextGroup = () => {
     if (group === totalGroups) return;
     setGroup((prev) => prev + 1);
   };
+
   const changePage = (value: number) => {
     setPage(value);
   };
 
+  //초기 페이지 설정
   useEffect(() => {
     setPage(1);
-  }, [totalCount]);
+  }, [setPage, totalCount]);
 
   return (
     <Container>

@@ -58,11 +58,6 @@ const List = () => {
     queryFn: fetchAllData,
   });
 
-  useEffect(() => {
-    if (!data) return;
-    setFilteredData(data);
-  }, [data]);
-
   const filterLegion = useCallback(
     (value: string) => {
       if (legion === "전체") return true;
@@ -129,6 +124,13 @@ const List = () => {
     [neut]
   );
 
+  //초기 데이터 저장
+  useEffect(() => {
+    if (!data) return;
+    setFilteredData(data);
+  }, [data]);
+
+  //조건에 맞는 정보 필터링
   useEffect(() => {
     const newData = data?.filter((value) => {
       if (!filterLegion(value.SIGUN_NM)) return false;
@@ -141,7 +143,21 @@ const List = () => {
     });
     setFilteredData(newData || []);
     setPage(1);
-  }, [legion, state, species, age, sex, neut]);
+  }, [
+    legion,
+    state,
+    species,
+    age,
+    sex,
+    neut,
+    data,
+    filterLegion,
+    filterState,
+    filterSpecies,
+    filterAge,
+    filterSex,
+    filterNeut,
+  ]);
 
   return (
     <Container>

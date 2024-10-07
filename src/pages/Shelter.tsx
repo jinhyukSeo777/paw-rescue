@@ -52,30 +52,12 @@ const Shelter = () => {
   const [neut, setNeut] = useState("전체");
   const [page, setPage] = useState(1);
   const [shelters, setShelters] = useState<IShelter[]>([]);
-  const [shelterName, setShelterName] = useState("");
+  const [shelterName, setShelterName] = useState("전체");
 
   const { data } = useQuery({
     queryKey: ["allData"],
     queryFn: fetchAllData,
   });
-
-  useEffect(() => {
-    if (!data || shelterName !== "") return;
-    setFilteredData(data);
-
-    const sheltersData: IShelter[] = Array.from(
-      new Set(
-        data.map((item) =>
-          JSON.stringify({
-            REFINE_WGS84_LOGT: item.REFINE_WGS84_LOGT,
-            REFINE_WGS84_LAT: item.REFINE_WGS84_LAT,
-            SHTER_NM: item.SHTER_NM,
-          })
-        )
-      ) // 객체를 문자열로 변환 후 Set에 저장 -> 중복 x
-    ).map((item) => JSON.parse(item)); //다시 객체로 반환
-    setShelters(sheltersData);
-  }, [data, shelterName]);
 
   const filterShelter = useCallback(
     (value: string) => {
@@ -151,11 +133,32 @@ const Shelter = () => {
     [neut]
   );
 
+  //초기 데이터 저장
   useEffect(() => {
     if (!data) return;
     setFilteredData(data);
   }, [data]);
 
+  //전체 보호소 정보 저장
+  useEffect(() => {
+    if (!data || shelterName !== "전체") return;
+    setFilteredData(data);
+
+    const sheltersData: IShelter[] = Array.from(
+      new Set(
+        data.map((item) =>
+          JSON.stringify({
+            REFINE_WGS84_LOGT: item.REFINE_WGS84_LOGT,
+            REFINE_WGS84_LAT: item.REFINE_WGS84_LAT,
+            SHTER_NM: item.SHTER_NM,
+          })
+        )
+      ) // 객체를 문자열로 변환 후 Set에 저장 -> 중복 x
+    ).map((item) => JSON.parse(item)); //다시 객체로 반환
+    setShelters(sheltersData);
+  }, [data, shelterName]);
+
+  //조건에 맞는 정보 필터링
   useEffect(() => {
     const newData = data?.filter((value) => {
       if (!filterShelter(value.SHTER_NM)) return false;
@@ -169,7 +172,23 @@ const Shelter = () => {
     });
     setFilteredData(newData || []);
     setPage(1);
-  }, [shelterName, legion, state, species, age, sex, neut]);
+  }, [
+    shelterName,
+    legion,
+    state,
+    species,
+    age,
+    sex,
+    neut,
+    data,
+    filterShelter,
+    filterLegion,
+    filterState,
+    filterSpecies,
+    filterAge,
+    filterSex,
+    filterNeut,
+  ]);
 
   return (
     <Container>
@@ -183,7 +202,10 @@ const Shelter = () => {
         <Dropdown category="성별" data={SEX} setState={setSex} />
         <Dropdown category="중성화" data={NEUT} setState={setNeut} />
       </DropdownArea>
-      <H2>{shelterName || "경기도"}에서 친구들이 기다리고 있어요</H2>
+      <H2>
+        {shelterName === "전체" ? "경기도" : shelterName}에서 친구들이 기다리고
+        있어요
+      </H2>
       <ShowItems data={filteredData.slice((page - 1) * 20, page * 20)} />
       <Pagenation
         page={page}

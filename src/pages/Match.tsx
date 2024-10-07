@@ -57,22 +57,11 @@ const Btn = styled.button<{ $disable?: boolean }>`
   }
 `;
 
-const Recommend = () => {
+const Match = () => {
   const [index, setIndex] = useState(0);
-  // 품종, 성별, 몸무게, 색상 순으로 저장
-  const [allInfo, setAllInfo] = useState<string[]>([]);
+  const [allInfo, setAllInfo] = useState<string[]>([]); //품종, 성별, 몸무게, 색상 순으로 저장
   const [currentInfo, setCurrentInfo] = useState("");
   const navigate = useNavigate();
-
-  useEffect(() => {
-    localStorage.removeItem("filterdData");
-  });
-
-  useEffect(() => {
-    if (index === 4) {
-      navigate("/result", { state: { allInfo } });
-    }
-  }, [index]);
 
   const handlePrev = () => {
     setCurrentInfo("");
@@ -81,12 +70,24 @@ const Recommend = () => {
 
   const handleNext = () => {
     if (!currentInfo) return;
-    const temp = [...allInfo];
+    const temp = allInfo;
     temp[index] = currentInfo;
     setAllInfo(temp);
     setCurrentInfo("");
     setIndex((prev) => prev + 1);
   };
+
+  //재설문시 기존의 설문결과 제거
+  useEffect(() => {
+    localStorage.removeItem("filterdData");
+  });
+
+  useEffect(() => {
+    if (index === 4) {
+      //설문 완료
+      navigate("/result", { state: { allInfo } });
+    }
+  }, [allInfo, index, navigate]);
 
   return (
     <Container>
@@ -130,4 +131,4 @@ const Recommend = () => {
   );
 };
 
-export default Recommend;
+export default Match;

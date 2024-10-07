@@ -5,9 +5,10 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBookmark as FullBookmark } from "@fortawesome/free-solid-svg-icons";
 import { faBookmark as ImptyBookmark } from "@fortawesome/free-regular-svg-icons";
 import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { updateMyPet } from "../../contexts/counterSlice";
 import { useNavigate } from "react-router-dom";
+import { RootState } from "../../contexts/store";
 
 const Container = styled.div<{ $hoverEffect: boolean | undefined }>`
   position: relative;
@@ -71,37 +72,23 @@ const Item = ({ data, hoverEffect }: IProps) => {
   const [isLiked, setIsLiked] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
-  const getLikeList = () => {
-    const obj = localStorage.getItem("like");
-    const likeList: IData[] = obj ? JSON.parse(obj) : null;
-    return likeList || [];
-  };
-
-  useEffect(() => {
-    const likeList = getLikeList();
-    const isIn = likeList.some(
-      (value) => value.ABDM_IDNTFY_NO === data.ABDM_IDNTFY_NO
-    );
-    setIsLiked(isIn);
-  }, [data.ABDM_IDNTFY_NO]);
+  const likeList = useSelector((state: RootState) => state.counter.myPet);
 
   const handleLike = (
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
-    event.stopPropagation(); // 좋아요 클릭시 버블링 방지
-    const likeList = getLikeList();
+    event.stopPropagation(); //버블링 방지 (detail페이지로 가는 이벤트 막기)
     if (isLiked) {
+      //좋아요 목록에서 제거
       const newList = likeList.filter(
         (value) => value.ABDM_IDNTFY_NO !== data.ABDM_IDNTFY_NO
       );
-      localStorage.setItem("like", JSON.stringify(newList));
       dispatch(updateMyPet(newList));
       setIsLiked(false);
     } else {
-      likeList.push(data);
-      localStorage.setItem("like", JSON.stringify(likeList));
-      dispatch(updateMyPet(likeList));
+      //좋아요 목록에 추가
+      const newList = [...likeList, data];
+      dispatch(updateMyPet(newList));
       setIsLiked(true);
     }
   };
@@ -109,6 +96,13 @@ const Item = ({ data, hoverEffect }: IProps) => {
   const goDetailPage = () => {
     navigate("/detail", { state: { data } });
   };
+
+  useEffect(() => {
+    const isInList = likeList.some(
+      (value) => value.ABDM_IDNTFY_NO === data.ABDM_IDNTFY_NO
+    );
+    setIsLiked(isInList);
+  }, [data.ABDM_IDNTFY_NO, likeList]);
 
   return (
     <Container onClick={goDetailPage} $hoverEffect={hoverEffect}>

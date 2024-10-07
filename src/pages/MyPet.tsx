@@ -1,13 +1,11 @@
 import styled from "styled-components";
 import { DESKTOP, PHONE, TABLET } from "../utils/size";
-import { useEffect, useState } from "react";
-import { IData } from "./Home";
+import { useState } from "react";
 import ShowItems from "../components/common/ShowItems";
 import Pagenation from "../components/common/Pagenation";
 import { RootState } from "../contexts/store";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { ReactComponent as MyBg } from "../assets/images/bg.svg";
-import { updateMyPet } from "../contexts/counterSlice";
 
 const Container = styled.main`
   width: 90%;
@@ -48,14 +46,6 @@ const StyledBg = styled(MyBg)`
 const MyPet = () => {
   const [page, setPage] = useState(1);
   const data = useSelector((state: RootState) => state.counter.myPet);
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    const jsonString = localStorage.getItem("like");
-    if (!jsonString) return;
-    const jsonObject: IData[] = JSON.parse(jsonString) || [];
-    dispatch(updateMyPet(jsonObject));
-  }, [dispatch]);
 
   return (
     <Container>

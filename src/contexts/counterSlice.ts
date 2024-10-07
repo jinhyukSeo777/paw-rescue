@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import { IData } from "../pages/Home";
 
 interface CounterState {
-  myPet: IData[];
+  myPet: IData[]; //좋아요 동물 목록
 }
 
 const initialState: CounterState = {
