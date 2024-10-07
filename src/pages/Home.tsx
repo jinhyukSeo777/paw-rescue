@@ -5,6 +5,7 @@ import { ReactComponent as MyBg } from "../assets/images/bg.svg";
 import { IMPACT_COLOR } from "../utils/color";
 import LastOneDay from "../components/common/LastOneDay";
 import Charts from "../components/chart/Charts";
+import { useNavigate } from "react-router-dom";
 
 const Container = styled.main`
   width: 90%;
@@ -133,6 +134,8 @@ export interface IData {
 }
 
 const Home = () => {
+  const navigate = useNavigate();
+
   return (
     <Container>
       <BannerArea>
@@ -146,7 +149,7 @@ const Home = () => {
             지금 당신의 따뜻한 마음을 기다리는 친구들이 있습니다. 유기동물
             입양으로 가족이 되어주세요.
           </p>
-          <button>
+          <button onClick={() => navigate("/recommend")}>
             나의 반려동물 찾기
             <MyIcon style={{ marginLeft: "0.3rem" }} />
           </button>
