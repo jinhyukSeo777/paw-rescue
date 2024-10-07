@@ -77,6 +77,14 @@ const Shelter = () => {
     setShelters(sheltersData);
   }, [data, shelterName]);
 
+  const filterShelter = useCallback(
+    (value: string) => {
+      if (shelterName === "전체") return true;
+      if (value === shelterName) return true;
+      return false;
+    },
+    [shelterName]
+  );
   const filterLegion = useCallback(
     (value: string) => {
       if (legion === "전체") return true;
@@ -150,6 +158,7 @@ const Shelter = () => {
 
   useEffect(() => {
     const newData = data?.filter((value) => {
+      if (!filterShelter(value.SHTER_NM)) return false;
       if (!filterLegion(value.SIGUN_NM)) return false;
       if (!filterState(value.STATE_NM)) return false;
       if (!filterSpecies(value.SPECIES_NM)) return false;
@@ -160,7 +169,7 @@ const Shelter = () => {
     });
     setFilteredData(newData || []);
     setPage(1);
-  }, [legion, state, species, age, sex, neut]);
+  }, [shelterName, legion, state, species, age, sex, neut]);
 
   return (
     <Container>
