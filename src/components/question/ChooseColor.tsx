@@ -82,9 +82,7 @@ interface IProps {
 const ChooseColor = ({ isCat, currentInfo, setCurrentInfo }: IProps) => {
   return (
     <Container>
-      <H2>
-        나를 위한 티셔츠를 고르고 있다. 어떤 색깔이 좋을까? 3개 이상 골라보자!
-      </H2>
+      <H2>나를 위한 티셔츠를 고르고 있다. 어떤 색깔이 좋을까?</H2>
       <Boxs $isCat={isCat}>
         <Box
           $selected={currentInfo === "흰색"}

@@ -9,6 +9,8 @@ import ChooseColor from "../components/question/ChooseColor";
 import { ReactComponent as MyIcon } from "../assets/icons/paw.svg";
 import ProgressBar from "../components/common/ProgressBar";
 import { useNavigate } from "react-router-dom";
+import { updateMatchResult } from "../contexts/counterSlice";
+import { useDispatch } from "react-redux";
 
 const Container = styled.main`
   width: 90%;
@@ -62,6 +64,7 @@ const Match = () => {
   const [allInfo, setAllInfo] = useState<string[]>([]); //품종, 성별, 몸무게, 색상 순으로 저장
   const [currentInfo, setCurrentInfo] = useState("");
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handlePrev = () => {
     setCurrentInfo("");
@@ -79,7 +82,7 @@ const Match = () => {
 
   //재설문시 기존의 설문결과 제거
   useEffect(() => {
-    localStorage.removeItem("filterdData");
+    dispatch(updateMatchResult([]));
   });
 
   useEffect(() => {

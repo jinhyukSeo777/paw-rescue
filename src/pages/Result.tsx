@@ -9,6 +9,9 @@ import { ReactComponent as MyPaw } from "../assets/icons/paw.svg";
 import { ReactComponent as MyBg } from "../assets/images/bg.svg";
 import Solution from "../components/common/Solution";
 import { fetchAllData } from "../utils/fetchData";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../contexts/store";
+import { updateMatchResult } from "../contexts/counterSlice";
 
 const Container = styled.main`
   width: 90%;
@@ -224,6 +227,10 @@ const Result = () => {
   const location = useLocation();
   const { allInfo } = (location.state as IInfo) || [];
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const storedItems = useSelector(
+    (state: RootState) => state.counter.matchResult
+  );
 
   const { data } = useQuery({
     queryKey: ["allData"],
@@ -320,10 +327,9 @@ const Result = () => {
 
   //조건에 맞는 동물 찾기
   useEffect(() => {
-    const storedItems = localStorage.getItem("filterdData");
     //페이지를 재방문할 경우 ex)새로고침, 뒤로가기 버튼
-    if (storedItems) {
-      setResult(JSON.parse(storedItems));
+    if (storedItems.length !== 0) {
+      setResult(storedItems);
       return;
     }
     //페이지를 처음 방문할 경우
@@ -337,7 +343,7 @@ const Result = () => {
     if (!filterdData) return;
     const result = getRandomElements(filterdData, 3);
     setResult(result);
-    localStorage.setItem("filterdData", JSON.stringify(result));
+    dispatch(updateMatchResult(result));
   }, [data, filterColor, filterSex, filterSize, filterSpecies]);
 
   // 설문조사를 건너띄고 온 유저 404로 보내기
