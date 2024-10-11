@@ -80,7 +80,7 @@ const Pagenation = ({ page, setPage, totalCount }: IProps) => {
     setPage(value);
   };
 
-  //초기 페이지 설정
+  // 초기 페이지 설정
   useEffect(() => {
     setPage(1);
   }, [setPage, totalCount]);

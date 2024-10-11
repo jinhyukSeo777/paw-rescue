@@ -87,6 +87,7 @@ const LastOneDay = () => {
     return tomorrow;
   };
 
+  // 공고기한 하루남은 데이터 fetch하는 함수
   const fetchData = async (): Promise<IData[]> => {
     const KEY = process.env.REACT_APP_KEY;
     const tomorrow = getTomorrow();

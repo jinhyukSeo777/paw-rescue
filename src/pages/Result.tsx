@@ -321,14 +321,14 @@ const Result = () => {
     [allInfo]
   );
 
-  //조건에 맞는 동물 찾기
+  // 조건에 맞는 동물 찾는 함수
   useEffect(() => {
-    //페이지를 재방문할 경우 ex)새로고침, 뒤로가기 버튼
+    // 페이지를 재방문할 경우 저장된 데이터 로드
     if (storedItems.length !== 0) {
       setResult(storedItems);
       return;
     }
-    //페이지를 처음 방문할 경우
+    // 페이지를 처음 방문할 경우 필터에 맞는 데이터 찾기
     const filterdData = data?.filter((value) => {
       if (!filterSpecies(value.SPECIES_NM)) return false;
       if (!filterSex(value.SEX_NM)) return false;
@@ -350,13 +350,14 @@ const Result = () => {
     storedItems,
   ]);
 
-  // 설문조사를 건너띄고 온 유저 404로 보내기
+  // 설문조사를 건너띄고 온 사용자 404로 보내는 함수
   useEffect(() => {
     if (!allInfo) {
       navigate("/404");
     }
   }, [allInfo, navigate]);
 
+  // "[" 와 "]" 를 포함한 사이 모든 문자 제거하는 함수
   const deleteTag = (value: string) => {
     return value.replace(/\[.*?\]/, "").trim();
   };
@@ -373,6 +374,7 @@ const Result = () => {
     navigate(`/detail/${data.ABDM_IDNTFY_NO}`);
   };
 
+  // count 개수 만큼 데이터를 랜덤 선택하는 함수
   const getRandomElements = (arr: IData[], count: number) => {
     if (arr.length < count) return [];
 

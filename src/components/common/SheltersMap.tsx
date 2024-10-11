@@ -32,6 +32,7 @@ const SheltersMap = ({ shelters, setShelterName }: IProps) => {
     },
   };
 
+  // 마커 클릭시 클릭된 보호소 저장하고 맵 바운드 재설정하는 함수
   const handleMarkerClick = (marker: IShelter) => {
     if (!setShelterName) return;
     setShelterName(marker.SHTER_NM);
@@ -42,7 +43,7 @@ const SheltersMap = ({ shelters, setShelterName }: IProps) => {
     map.setBounds(bounds);
   };
 
-  //초기 지도 설정
+  // 초기 지도 설정
   useEffect(() => {
     if (!map) return;
     const bounds = new kakao.maps.LatLngBounds();

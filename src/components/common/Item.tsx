@@ -97,6 +97,7 @@ const Item = ({ data, hoverEffect }: IProps) => {
     navigate(`/detail/${data.ABDM_IDNTFY_NO}`);
   };
 
+  // 좋아요 목록에 있는지 확인하는 함수
   useEffect(() => {
     const isInList = likeList.some(
       (value) => value.ABDM_IDNTFY_NO === data.ABDM_IDNTFY_NO

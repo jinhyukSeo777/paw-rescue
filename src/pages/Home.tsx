@@ -109,26 +109,26 @@ const BannerBg = styled(MyBg)`
 `;
 
 export interface IData {
-  SPECIES_NM: string; //품종
-  SEX_NM: "M" | "F"; //성별
-  NEUT_YN: string; //중성화여부
-  AGE_INFO: string; //나이
-  BDWGH_INFO: string; //체중
-  RECEPT_DE: string; //접수일시
-  DISCVRY_PLC_INFO: string; //발견장소
-  SFETR_INFO: string; //특징
-  PBLANC_BEGIN_DE: string; //공고시작
-  PBLANC_END_DE: string; //공고마감
-  SHTER_NM: string; //보호센터
-  REFINE_ROADNM_ADDR: string; //센터주소
-  SHTER_TELNO: string; //연락처
-  IMAGE_COURS: string; //이미지
-  THUMB_IMAGE_COURS: string; //썸네일
-  REFINE_WGS84_LAT: string; //위도
-  REFINE_WGS84_LOGT: string; //경도
-  SIGUN_NM: string; //시군명
-  STATE_NM: string; //상태
-  ABDM_IDNTFY_NO: string; //고유번호
+  SPECIES_NM: string; // 품종
+  SEX_NM: "M" | "F"; // 성별
+  NEUT_YN: string; // 중성화여부
+  AGE_INFO: string; // 나이
+  BDWGH_INFO: string; // 체중
+  RECEPT_DE: string; // 접수일시
+  DISCVRY_PLC_INFO: string; // 발견장소
+  SFETR_INFO: string; // 특징
+  PBLANC_BEGIN_DE: string; // 공고시작
+  PBLANC_END_DE: string; // 공고마감
+  SHTER_NM: string; // 보호센터
+  REFINE_ROADNM_ADDR: string; // 센터주소
+  SHTER_TELNO: string; // 연락처
+  IMAGE_COURS: string; // 이미지
+  THUMB_IMAGE_COURS: string; // 썸네일
+  REFINE_WGS84_LAT: string; // 위도
+  REFINE_WGS84_LOGT: string; // 경도
+  SIGUN_NM: string; // 시군명
+  STATE_NM: string; // 상태
+  ABDM_IDNTFY_NO: string; // 고유번호
   PBLANC_IDNTFY_NO: string; // 공고번호
   COLOR_NM: string; // 색상
 }

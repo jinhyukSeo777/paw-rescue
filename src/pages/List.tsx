@@ -120,13 +120,13 @@ const List = () => {
     [neut]
   );
 
-  //초기 데이터 저장
+  // 초기 데이터 저장
   useEffect(() => {
     if (!data) return;
     setFilteredData(data);
   }, [data]);
 
-  //조건에 맞는 정보 필터링
+  // 조건에 맞는 데이터 필터링하는 함수
   useEffect(() => {
     const newData = data?.filter((value) => {
       if (!filterLegion(value.SIGUN_NM)) return false;

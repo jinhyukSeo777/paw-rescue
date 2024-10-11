@@ -24,6 +24,7 @@ const Container = styled.main`
 const Error = () => {
   const navigate = useNavigate();
 
+  // 1.5초후 홈으로 페이지 전환하는 함수
   useEffect(() => {
     setTimeout(() => {
       navigate("/");

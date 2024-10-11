@@ -159,14 +159,14 @@ const Detail = () => {
     return `${year}년 ${month}월 ${day}일`;
   };
 
-  //데이터 없으면 404 페이지로
+  // 데이터 없으면 404 페이지로 전환하는 함수
   useEffect(() => {
     if (!isLoading && !data) {
       navigate("/404");
     }
   }, [isLoading, data, navigate]);
 
-  //좋아요 동물 목록에 있는지 확인
+  // 좋아요 목록에 있는지 확인하는 함수
   useEffect(() => {
     const isIn = likeList.some(
       (value) => value.ABDM_IDNTFY_NO === data?.ABDM_IDNTFY_NO

@@ -129,17 +129,19 @@ const Shelter = () => {
     [neut]
   );
 
-  //초기 데이터 저장
+  // 초기 데이터 저장
   useEffect(() => {
     if (!data) return;
     setFilteredData(data);
   }, [data]);
 
-  //전체 보호소 정보 저장
+  // 전체 보호소 정보 가져오는 함수
   useEffect(() => {
     if (!data || shelterName !== "전체") return;
     setFilteredData(data);
 
+    // 객체를 문자열로 변환 후 Set에 저장
+    // Set을 사용하는 이유는 중복을 없애기 위해
     const sheltersData: IShelter[] = Array.from(
       new Set(
         data.map((item) =>
@@ -149,12 +151,12 @@ const Shelter = () => {
             SHTER_NM: item.SHTER_NM,
           })
         )
-      ) // 객체를 문자열로 변환 후 Set에 저장 -> 중복 x
-    ).map((item) => JSON.parse(item)); //다시 객체로 반환
+      )
+    ).map((item) => JSON.parse(item)); // 다시 객체로 반환
     setShelters(sheltersData);
   }, [data, shelterName]);
 
-  //조건에 맞는 정보 필터링
+  // 조건에 맞는 정보 필터링하는 함수
   useEffect(() => {
     const newData = data?.filter((value) => {
       if (!filterShelter(value.SHTER_NM)) return false;

@@ -66,12 +66,12 @@ const Match = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const handlePrev = () => {
+  const goPrevQuestion = () => {
     setCurrentInfo("");
     setIndex((prev) => prev - 1);
   };
 
-  const handleNext = () => {
+  const goNextQuestion = () => {
     if (!currentInfo) return;
     const temp = allInfo;
     temp[index] = currentInfo;
@@ -80,14 +80,14 @@ const Match = () => {
     setIndex((prev) => prev + 1);
   };
 
-  //재설문시 기존의 설문결과 제거
+  // 재설문시 기존의 설문결과 제거하는 함수
   useEffect(() => {
     dispatch(updateMatchResult([]));
   });
 
+  // 설문 완료시 페이지 전환하는 함수
   useEffect(() => {
     if (index === 4) {
-      //설문 완료
       navigate("/result", { state: { allInfo } });
     }
   }, [allInfo, index, navigate]);
@@ -116,7 +116,7 @@ const Match = () => {
       )}
       <BtnArea>
         {index !== 0 && (
-          <Btn onClick={handlePrev}>
+          <Btn onClick={goPrevQuestion}>
             이전
             <MyIcon style={{ marginLeft: "0.5rem" }} />
           </Btn>
@@ -124,7 +124,7 @@ const Match = () => {
         <Btn
           $disable={!currentInfo}
           disabled={!currentInfo}
-          onClick={handleNext}
+          onClick={goNextQuestion}
         >
           다음
           <MyIcon style={{ marginLeft: "0.5rem" }} />

@@ -59,7 +59,7 @@ interface IProps {
 
 const Dropdown = ({ category, data, setState }: IProps) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [value, setValue] = useState(category);
+  const [value, setValue] = useState(category); // 드롭다운의 현재 value 값
 
   const toggleDropdown = () => {
     setIsOpen((prev) => !prev);

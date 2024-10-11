@@ -45,7 +45,7 @@ export const fetchAllData = async () => {
   return allData;
 };
 
-// 커스텀 훅으로 데이터 가져오기
+// 데이터 가져오는 커스텀 훅
 const useGetAllData = () => {
   const { data, error, isLoading } = useQuery({
     queryKey: ["allData"],
