@@ -7,7 +7,7 @@ import { LEGION as LEGIONS } from "../components/chart/Charts";
 import { useCallback, useEffect, useState } from "react";
 import ShowItems from "../components/common/ShowItems";
 import Pagenation from "../components/common/Pagenation";
-import useAllData from "../hooks/useAllData";
+import useGetAllData from "../hooks/useGetAllData";
 
 const Container = styled.main`
   width: 90%;
@@ -52,7 +52,7 @@ const List = () => {
   const [neut, setNeut] = useState("전체");
   const [page, setPage] = useState(1);
 
-  const { data } = useAllData();
+  const { data } = useGetAllData();
 
   const filterLegion = useCallback(
     (value: string) => {

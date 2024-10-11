@@ -10,7 +10,7 @@ import { updateMyPet } from "../contexts/counterSlice";
 import { useDispatch, useSelector } from "react-redux";
 import SheltersMap from "../components/common/SheltersMap";
 import { RootState } from "../contexts/store";
-import { useGetDetail } from "../hooks/useDetail";
+import { useGetDetail } from "../hooks/useGetDetail";
 import Loading from "../components/common/Loading";
 
 const Container = styled.main`

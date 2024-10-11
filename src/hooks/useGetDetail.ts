@@ -1,4 +1,4 @@
-import useAllData from "../hooks/useAllData";
+import useAllData from "./useGetAllData";
 
 export const useGetDetail = (id: string | undefined) => {
   const { data: allData, isLoading } = useAllData();

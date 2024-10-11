@@ -10,7 +10,7 @@ import Solution from "../components/common/Solution";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../contexts/store";
 import { updateMatchResult } from "../contexts/counterSlice";
-import useAllData from "../hooks/useAllData";
+import useGetAllData from "../hooks/useGetAllData";
 
 const Container = styled.main`
   width: 90%;
@@ -231,7 +231,7 @@ const Result = () => {
     (state: RootState) => state.counter.matchResult
   );
 
-  const { data } = useAllData();
+  const { data } = useGetAllData();
 
   const filterSpecies = useCallback(
     (value: string) => {
@@ -340,7 +340,15 @@ const Result = () => {
     const result = getRandomElements(filterdData, 3);
     setResult(result);
     dispatch(updateMatchResult(result));
-  }, [data, filterColor, filterSex, filterSize, filterSpecies]);
+  }, [
+    data,
+    dispatch,
+    filterColor,
+    filterSex,
+    filterSize,
+    filterSpecies,
+    storedItems,
+  ]);
 
   // 설문조사를 건너띄고 온 유저 404로 보내기
   useEffect(() => {
@@ -362,7 +370,7 @@ const Result = () => {
   };
 
   const goDetailPage = (data: IData) => {
-    navigate("/detail", { state: { data } });
+    navigate(`/detail/${data.ABDM_IDNTFY_NO}`);
   };
 
   const getRandomElements = (arr: IData[], count: number) => {

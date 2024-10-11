@@ -29,7 +29,7 @@ export const fetchAllData = async () => {
 };
 
 // 커스텀 훅으로 데이터 가져오기
-const useAllData = () => {
+const useGetAllData = () => {
   const { data, error, isLoading } = useQuery({
     queryKey: ["allData"],
     queryFn: fetchAllData,
@@ -38,4 +38,4 @@ const useAllData = () => {
   return { data, error, isLoading };
 };
 
-export default useAllData;
+export default useGetAllData;

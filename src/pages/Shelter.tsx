@@ -7,7 +7,7 @@ import Dropdown from "../components/common/Dropdown";
 import ShowItems from "../components/common/ShowItems";
 import Pagenation from "../components/common/Pagenation";
 import SheltersMap, { IShelter } from "../components/common/SheltersMap";
-import useAllData from "../hooks/useAllData";
+import useGetAllData from "../hooks/useGetAllData";
 
 const Container = styled.main`
   width: 90%;
@@ -53,7 +53,7 @@ const Shelter = () => {
   const [shelters, setShelters] = useState<IShelter[]>([]);
   const [shelterName, setShelterName] = useState("전체");
 
-  const { data } = useAllData();
+  const { data } = useGetAllData();
 
   const filterShelter = useCallback(
     (value: string) => {

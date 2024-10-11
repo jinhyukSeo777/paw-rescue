@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import DonutChart from "./DonutChart";
 import BarChart from "./BarChart";
 import { TABLET } from "../../utils/size";
-import useAllData from "../../hooks/useAllData";
+import useAllData from "../../hooks/useGetAllData";
 
 const Container = styled.section`
   width: 100%;
