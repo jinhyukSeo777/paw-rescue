@@ -20,7 +20,7 @@ function App() {
         <Route path="/list" element={<List />} />
         <Route path="/shelter" element={<Shelter />} />
         <Route path="/mypet" element={<MyPet />} />
-        <Route path="/detail" element={<Detail />} />
+        <Route path="/detail/:id" element={<Detail />} />
         <Route path="/match" element={<Match />} />
         <Route path="/result" element={<Result />} />
         <Route path="/404" element={<Error />} />

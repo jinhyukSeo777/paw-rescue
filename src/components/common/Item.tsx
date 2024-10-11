@@ -74,7 +74,7 @@ const Item = ({ data, hoverEffect }: IProps) => {
   const navigate = useNavigate();
   const likeList = useSelector((state: RootState) => state.counter.myPet);
 
-  const handleLike = (
+  const toggleLike = (
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
     event.stopPropagation(); //버블링 방지 (detail페이지로 가는 이벤트 막기)
@@ -94,7 +94,7 @@ const Item = ({ data, hoverEffect }: IProps) => {
   };
 
   const goDetailPage = () => {
-    navigate("/detail", { state: { data } });
+    navigate(`/detail/${data.ABDM_IDNTFY_NO}`, { state: { data } });
   };
 
   useEffect(() => {
@@ -110,7 +110,7 @@ const Item = ({ data, hoverEffect }: IProps) => {
       <Info>
         <div>
           <span>{data.SPECIES_NM}</span>
-          <span onClick={handleLike}>
+          <span onClick={toggleLike}>
             {isLiked ? (
               <FontAwesomeIcon
                 style={{ color: MAIN_COLOR }}
