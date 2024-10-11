@@ -1,5 +1,4 @@
-import { useLocation } from "react-router-dom";
-import { IData } from "./Home";
+import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
 import { DESKTOP } from "../utils/size";
 import { MAIN_COLOR } from "../utils/color";
@@ -11,6 +10,7 @@ import { updateMyPet } from "../contexts/counterSlice";
 import { useDispatch, useSelector } from "react-redux";
 import SheltersMap from "../components/common/SheltersMap";
 import { RootState } from "../contexts/store";
+import { useGetDetail } from "../hooks/useDetail";
 
 const Container = styled.main`
   width: 90%;
@@ -120,29 +120,26 @@ const Info = styled.div`
   }
 `;
 
-interface ILocation {
-  data: IData;
-}
-
 const Detail = () => {
+  const { id } = useParams();
+  const { data, isLoading } = useGetDetail(id);
   const [isLiked, setIsLiked] = useState(false);
-  const dispatch = useDispatch();
-  const location = useLocation();
-  const { data } = (location.state as ILocation) || {};
   const shelters = [
     {
-      SHTER_NM: data.SHTER_NM,
-      REFINE_WGS84_LAT: data.REFINE_WGS84_LAT,
-      REFINE_WGS84_LOGT: data.REFINE_WGS84_LOGT,
+      SHTER_NM: data?.SHTER_NM || "",
+      REFINE_WGS84_LAT: data?.REFINE_WGS84_LAT || "",
+      REFINE_WGS84_LOGT: data?.REFINE_WGS84_LOGT || "",
     },
   ];
   const likeList = useSelector((state: RootState) => state.counter.myPet);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-  const handleLike = () => {
+  const toggleLike = () => {
     if (isLiked) {
       //좋아요 목록에서 제거
       const newList = likeList.filter(
-        (value) => value.ABDM_IDNTFY_NO !== data.ABDM_IDNTFY_NO
+        (value) => value.ABDM_IDNTFY_NO !== data?.ABDM_IDNTFY_NO
       );
       dispatch(updateMyPet(newList));
       setIsLiked(false);
@@ -161,91 +158,102 @@ const Detail = () => {
     return `${year}년 ${month}월 ${day}일`;
   };
 
+  //데이터 없으면 404 페이지로
+  useEffect(() => {
+    if (!isLoading && !data) {
+      navigate("/404");
+    }
+  }, [isLoading, data, navigate]);
+
   useEffect(() => {
     const isIn = likeList.some(
-      (value) => value.ABDM_IDNTFY_NO === data.ABDM_IDNTFY_NO
+      (value) => value.ABDM_IDNTFY_NO === data?.ABDM_IDNTFY_NO
     );
     setIsLiked(isIn);
-  }, [data.ABDM_IDNTFY_NO, likeList]);
+  }, [data, data?.ABDM_IDNTFY_NO, likeList]);
 
   return (
-    <Container>
-      <H2>
-        <span onClick={handleLike}>
-          {isLiked ? (
-            <FontAwesomeIcon
-              style={{ color: MAIN_COLOR }}
-              icon={FullBookmark}
-            />
-          ) : (
-            <FontAwesomeIcon
-              style={{ color: MAIN_COLOR }}
-              icon={ImptyBookmark}
-            />
-          )}
-        </span>
-        <span>공고번호</span>
-        {data.PBLANC_IDNTFY_NO}
-      </H2>
-      <InfoArea>
-        <Photo $url={data.IMAGE_COURS} />
-        <InfoBox>
-          <Info>
-            <span>품종</span>
-            <p>{data.SPECIES_NM}</p>
-          </Info>
-          <Info>
-            <span>성별</span>
-            <p>{data.SEX_NM}</p>
-          </Info>
-          <Info>
-            <span>중성화여부</span>
-            <p>{data.NEUT_YN}</p>
-          </Info>
-          <Info>
-            <span>나이</span>
-            <p>{data.AGE_INFO}</p>
-          </Info>
-          <Info>
-            <span>체중</span>
-            <p>{data.BDWGH_INFO}</p>
-          </Info>
-          <Info>
-            <span>접수일시</span>
-            <p>{formatDate(data.RECEPT_DE)}</p>
-          </Info>
-          <Info>
-            <span>발견장소</span>
-            <p>{data.DISCVRY_PLC_INFO}</p>
-          </Info>
-          <Info>
-            <span>특징</span>
-            <p>{data.SFETR_INFO}</p>
-          </Info>
-          <Info>
-            <span>공고기한</span>
-            <p>
-              {formatDate(data.PBLANC_BEGIN_DE)} ~{" "}
-              {formatDate(data.PBLANC_END_DE)}
-            </p>
-          </Info>
-          <Info>
-            <span>보호센터</span>
-            <p>{data.SHTER_NM}</p>
-          </Info>
-          <Info>
-            <span>센터주소</span>
-            <p>{data.REFINE_ROADNM_ADDR}</p>
-          </Info>
-          <Info>
-            <span>연락처</span>
-            <p>{data.SHTER_TELNO}</p>
-          </Info>
-        </InfoBox>
-      </InfoArea>
-      <H2>{data.SHTER_NM}에서 기다리고 있어요</H2>
-      <SheltersMap shelters={shelters} />
-    </Container>
+    <>
+      {data && (
+        <Container>
+          <H2>
+            <span onClick={toggleLike}>
+              {isLiked ? (
+                <FontAwesomeIcon
+                  style={{ color: MAIN_COLOR }}
+                  icon={FullBookmark}
+                />
+              ) : (
+                <FontAwesomeIcon
+                  style={{ color: MAIN_COLOR }}
+                  icon={ImptyBookmark}
+                />
+              )}
+            </span>
+            <span>공고번호</span>
+            {data.PBLANC_IDNTFY_NO}
+          </H2>
+          <InfoArea>
+            <Photo $url={data.IMAGE_COURS} />
+            <InfoBox>
+              <Info>
+                <span>품종</span>
+                <p>{data.SPECIES_NM}</p>
+              </Info>
+              <Info>
+                <span>성별</span>
+                <p>{data.SEX_NM}</p>
+              </Info>
+              <Info>
+                <span>중성화여부</span>
+                <p>{data.NEUT_YN}</p>
+              </Info>
+              <Info>
+                <span>나이</span>
+                <p>{data.AGE_INFO}</p>
+              </Info>
+              <Info>
+                <span>체중</span>
+                <p>{data.BDWGH_INFO}</p>
+              </Info>
+              <Info>
+                <span>접수일시</span>
+                <p>{formatDate(data.RECEPT_DE)}</p>
+              </Info>
+              <Info>
+                <span>발견장소</span>
+                <p>{data.DISCVRY_PLC_INFO}</p>
+              </Info>
+              <Info>
+                <span>특징</span>
+                <p>{data.SFETR_INFO}</p>
+              </Info>
+              <Info>
+                <span>공고기한</span>
+                <p>
+                  {formatDate(data.PBLANC_BEGIN_DE)} ~{" "}
+                  {formatDate(data.PBLANC_END_DE)}
+                </p>
+              </Info>
+              <Info>
+                <span>보호센터</span>
+                <p>{data.SHTER_NM}</p>
+              </Info>
+              <Info>
+                <span>센터주소</span>
+                <p>{data.REFINE_ROADNM_ADDR}</p>
+              </Info>
+              <Info>
+                <span>연락처</span>
+                <p>{data.SHTER_TELNO}</p>
+              </Info>
+            </InfoBox>
+          </InfoArea>
+          <H2>{data.SHTER_NM}에서 기다리고 있어요</H2>
+          <SheltersMap shelters={shelters} />
+        </Container>
+      )}
+    </>
   );
 };
 

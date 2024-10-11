@@ -1,14 +1,13 @@
 import styled from "styled-components";
 import { DESKTOP } from "../utils/size";
 import { useCallback, useEffect, useState } from "react";
-import { useQuery } from "@tanstack/react-query";
 import { IData } from "./Home";
 import { LEGION as LEGIONS } from "../components/chart/Charts";
 import Dropdown from "../components/common/Dropdown";
 import ShowItems from "../components/common/ShowItems";
 import Pagenation from "../components/common/Pagenation";
 import SheltersMap, { IShelter } from "../components/common/SheltersMap";
-import { fetchAllData } from "../utils/fetchData";
+import useAllData from "../hooks/useAllData";
 
 const Container = styled.main`
   width: 90%;
@@ -54,10 +53,7 @@ const Shelter = () => {
   const [shelters, setShelters] = useState<IShelter[]>([]);
   const [shelterName, setShelterName] = useState("전체");
 
-  const { data } = useQuery({
-    queryKey: ["allData"],
-    queryFn: fetchAllData,
-  });
+  const { data } = useAllData();
 
   const filterShelter = useCallback(
     (value: string) => {

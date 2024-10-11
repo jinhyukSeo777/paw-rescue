@@ -1,11 +1,10 @@
 import styled from "styled-components";
 import { CHART_COLOR, MAIN_COLOR } from "../../utils/color";
-import { useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import DonutChart from "./DonutChart";
 import BarChart from "./BarChart";
 import { TABLET } from "../../utils/size";
-import { fetchAllData } from "../../utils/fetchData";
+import useAllData from "../../hooks/useAllData";
 
 const Container = styled.section`
   width: 100%;
@@ -69,10 +68,7 @@ const Charts = () => {
   const [stateCount, setStateCount] = useState<number[]>([]); //상태별 동물 숫자 저장
   const [legionCount, setLegionCount] = useState<number[]>([]); //시군구별 동물 숫자 저장
 
-  const { data } = useQuery({
-    queryKey: ["allData"],
-    queryFn: fetchAllData,
-  });
+  const { data } = useAllData();
 
   useEffect(() => {
     const stateCount = new Array(7).fill(0);

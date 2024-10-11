@@ -1,4 +1,3 @@
-import { useQuery } from "@tanstack/react-query";
 import { useCallback, useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { IData } from "./Home";
@@ -8,10 +7,10 @@ import { g1, g2, MAIN_COLOR } from "../utils/color";
 import { ReactComponent as MyPaw } from "../assets/icons/paw.svg";
 import { ReactComponent as MyBg } from "../assets/images/bg.svg";
 import Solution from "../components/common/Solution";
-import { fetchAllData } from "../utils/fetchData";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../contexts/store";
 import { updateMatchResult } from "../contexts/counterSlice";
+import useAllData from "../hooks/useAllData";
 
 const Container = styled.main`
   width: 90%;
@@ -232,10 +231,7 @@ const Result = () => {
     (state: RootState) => state.counter.matchResult
   );
 
-  const { data } = useQuery({
-    queryKey: ["allData"],
-    queryFn: fetchAllData,
-  });
+  const { data } = useAllData();
 
   const filterSpecies = useCallback(
     (value: string) => {

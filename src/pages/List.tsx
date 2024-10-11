@@ -1,14 +1,13 @@
 import styled from "styled-components";
 import { DESKTOP } from "../utils/size";
 import LastOneDay from "../components/common/LastOneDay";
-import { useQuery } from "@tanstack/react-query";
 import { IData } from "./Home";
 import Dropdown from "../components/common/Dropdown";
 import { LEGION as LEGIONS } from "../components/chart/Charts";
 import { useCallback, useEffect, useState } from "react";
 import ShowItems from "../components/common/ShowItems";
 import Pagenation from "../components/common/Pagenation";
-import { fetchAllData } from "../utils/fetchData";
+import useAllData from "../hooks/useAllData";
 
 const Container = styled.main`
   width: 90%;
@@ -53,10 +52,7 @@ const List = () => {
   const [neut, setNeut] = useState("전체");
   const [page, setPage] = useState(1);
 
-  const { data } = useQuery({
-    queryKey: ["allData"],
-    queryFn: fetchAllData,
-  });
+  const { data } = useAllData();
 
   const filterLegion = useCallback(
     (value: string) => {
