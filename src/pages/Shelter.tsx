@@ -191,7 +191,11 @@ const Shelter = () => {
   return (
     <Container>
       <H2>나와 가까운 보호소를 클릭해 보세요</H2>
-      <SheltersMap shelters={shelters} setShelterName={setShelterName} />
+      <SheltersMap
+        shelters={shelters}
+        setShelterName={setShelterName}
+        zoomable={true}
+      />
       <DropdownArea>
         <Dropdown category="시도군" data={LEGION} setState={setLegion} />
         <Dropdown category="상태" data={STATE} setState={setState} />

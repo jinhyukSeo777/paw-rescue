@@ -18,9 +18,10 @@ export interface IShelter {
 interface IProps {
   shelters: IShelter[];
   setShelterName?: React.Dispatch<React.SetStateAction<string>>;
+  zoomable: boolean;
 }
 
-const SheltersMap = ({ shelters, setShelterName }: IProps) => {
+const SheltersMap = ({ shelters, setShelterName, zoomable }: IProps) => {
   const [map, setMap] = useState<any>();
   const [markers, setMarkers] = useState<IShelter[]>([]);
 
@@ -75,6 +76,7 @@ const SheltersMap = ({ shelters, setShelterName }: IProps) => {
         }}
         level={3}
         onCreate={setMap}
+        zoomable={zoomable}
       >
         {markers.map((marker, index) => (
           <MapMarker

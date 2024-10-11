@@ -252,7 +252,7 @@ const Detail = () => {
             </InfoBox>
           </InfoArea>
           <H2>{data.SHTER_NM}에서 기다리고 있어요</H2>
-          <SheltersMap shelters={shelters} />
+          <SheltersMap shelters={shelters} zoomable={false} />
         </Container>
       ) : (
         <Loading></Loading>
