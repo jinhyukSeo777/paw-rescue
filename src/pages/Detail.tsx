@@ -11,6 +11,7 @@ import { useDispatch, useSelector } from "react-redux";
 import SheltersMap from "../components/common/SheltersMap";
 import { RootState } from "../contexts/store";
 import { useGetDetail } from "../hooks/useDetail";
+import Loading from "../components/common/Loading";
 
 const Container = styled.main`
   width: 90%;
@@ -165,6 +166,7 @@ const Detail = () => {
     }
   }, [isLoading, data, navigate]);
 
+  //좋아요 동물 목록에 있는지 확인
   useEffect(() => {
     const isIn = likeList.some(
       (value) => value.ABDM_IDNTFY_NO === data?.ABDM_IDNTFY_NO
@@ -174,7 +176,7 @@ const Detail = () => {
 
   return (
     <>
-      {data && (
+      {data ? (
         <Container>
           <H2>
             <span onClick={toggleLike}>
@@ -252,6 +254,8 @@ const Detail = () => {
           <H2>{data.SHTER_NM}에서 기다리고 있어요</H2>
           <SheltersMap shelters={shelters} />
         </Container>
+      ) : (
+        <Loading></Loading>
       )}
     </>
   );
