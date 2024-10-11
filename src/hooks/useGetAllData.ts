@@ -6,26 +6,43 @@ import { IData } from "../pages/Home";
 export const fetchData = async (page: number): Promise<IData[]> => {
   const KEY = process.env.REACT_APP_KEY;
   const { data } = await axios.get(
-    `https://openapi.gg.go.kr/AbdmAnimalProtect?KEY=${KEY}&Type=json&pSize=1000&page=${page}`
+    `https://openapi.gg.go.kr/AbdmAnimalProtect?KEY=${KEY}&Type=json&pSize=1000&pIndex=${page}`
   );
   return data.AbdmAnimalProtect[1].row;
 };
 
-// 모든 페이지의 데이터를 병렬로 요청하는 함수
+// 10페이지까지 병렬로 처리하고, 그 후에는 순차적으로 데이터를 요청하는 함수
 export const fetchAllData = async () => {
-  const totalPages = 10; // 10,000개의 데이터를 가져오려면 1,000개씩 10 페이지 필요
-  const queries = [];
+  let allData: IData[] = [];
+  const totalPagesToFetchInParallel = 10; // 병렬로 요청할 페이지 수
+  let currentPage = 1;
 
-  // 1~10 페이지까지 요청을 생성
-  for (let i = 1; i <= totalPages; i++) {
-    queries.push(fetchData(i));
+  // 1~10 페이지는 병렬로 요청
+  const parallelQueries = [];
+  for (let i = 1; i <= totalPagesToFetchInParallel; i++) {
+    parallelQueries.push(fetchData(i));
   }
 
-  // 모든 페이지의 데이터를 병렬로 요청
-  const results = await Promise.all(queries);
+  const parallelResults = await Promise.all(parallelQueries);
 
-  // 모든 페이지의 데이터를 하나로 합치기
-  return results.flat();
+  // 데이터를 flat()으로 병합
+  allData = parallelResults.flat();
+
+  // 11페이지 이후는 순차적으로 요청
+  currentPage = totalPagesToFetchInParallel + 1;
+  while (true) {
+    const data = await fetchData(currentPage);
+
+    allData = [...allData, ...data];
+
+    // 1000개보다 적은 데이터를 받으면 마지막 페이지로 간주
+    if (data.length < 1000) {
+      break;
+    }
+    currentPage++;
+  }
+
+  return allData;
 };
 
 // 커스텀 훅으로 데이터 가져오기
