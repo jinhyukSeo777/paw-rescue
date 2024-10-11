@@ -17,7 +17,7 @@ const Container = styled.div<{ $hoverEffect: boolean | undefined }>`
   position: relative;
   top: 0;
   &:hover {
-    top: ${(props) => (props.$hoverEffect ? "-1.5rem" : null)};
+    top: ${(props) => (props.$hoverEffect ? "-1rem" : null)};
     transition: ${(props) => (props.$hoverEffect ? "0.3s" : null)};
   }
 `;
@@ -94,7 +94,7 @@ const Item = ({ data, hoverEffect }: IProps) => {
   };
 
   const goDetailPage = () => {
-    navigate(`/detail/${data.ABDM_IDNTFY_NO}`, { state: { data } });
+    navigate(`/detail/${data.ABDM_IDNTFY_NO}`);
   };
 
   useEffect(() => {
