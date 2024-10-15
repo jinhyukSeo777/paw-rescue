@@ -6,6 +6,7 @@ import { GlobalStyle, LoadFont } from "./styles/GlobalStyles";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Provider } from "react-redux";
 import store from "./contexts/store";
+import ScrollToTop from "./utils/ScrollToTop";
 
 const queryClient = new QueryClient();
 
@@ -17,6 +18,7 @@ root.render(
     <React.StrictMode>
       <Provider store={store}>
         <QueryClientProvider client={queryClient}>
+          <ScrollToTop />
           <LoadFont />
           <GlobalStyle />
           <App />
