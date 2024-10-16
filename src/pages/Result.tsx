@@ -340,15 +340,7 @@ const Result = () => {
     const result = getRandomElements(filterdData, 3);
     setResult(result);
     dispatch(updateMatchResult(result));
-  }, [
-    data,
-    dispatch,
-    filterColor,
-    filterSex,
-    filterSize,
-    filterSpecies,
-    storedItems,
-  ]);
+  }, [data, dispatch, filterColor, filterSex, filterSize, filterSpecies]);
 
   // 설문조사를 건너띄고 온 사용자 404로 보내는 함수
   useEffect(() => {
