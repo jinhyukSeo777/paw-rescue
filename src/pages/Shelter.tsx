@@ -52,6 +52,7 @@ const Shelter = () => {
   const [page, setPage] = useState(1);
   const [shelters, setShelters] = useState<IShelter[]>([]);
   const [shelterName, setShelterName] = useState("전체");
+  const [selectedDropDown, setSelectedDropDown] = useState("");
 
   const { data } = useGetAllData();
 
@@ -197,12 +198,48 @@ const Shelter = () => {
         zoomable={true}
       />
       <DropdownArea>
-        <Dropdown category="시도군" data={LEGION} setState={setLegion} />
-        <Dropdown category="상태" data={STATE} setState={setState} />
-        <Dropdown category="품종" data={SPECIES} setState={setSpecies} />
-        <Dropdown category="나이" data={AGE} setState={setAge} />
-        <Dropdown category="성별" data={SEX} setState={setSex} />
-        <Dropdown category="중성화" data={NEUT} setState={setNeut} />
+        <Dropdown
+          category="시도군"
+          data={LEGION}
+          setState={setLegion}
+          isOpen={selectedDropDown === "시도군"}
+          setSelectedDropDown={setSelectedDropDown}
+        />
+        <Dropdown
+          category="상태"
+          data={STATE}
+          setState={setState}
+          isOpen={selectedDropDown === "상태"}
+          setSelectedDropDown={setSelectedDropDown}
+        />
+        <Dropdown
+          category="품종"
+          data={SPECIES}
+          setState={setSpecies}
+          isOpen={selectedDropDown === "품종"}
+          setSelectedDropDown={setSelectedDropDown}
+        />
+        <Dropdown
+          category="나이"
+          data={AGE}
+          setState={setAge}
+          isOpen={selectedDropDown === "나이"}
+          setSelectedDropDown={setSelectedDropDown}
+        />
+        <Dropdown
+          category="성별"
+          data={SEX}
+          setState={setSex}
+          isOpen={selectedDropDown === "성별"}
+          setSelectedDropDown={setSelectedDropDown}
+        />
+        <Dropdown
+          category="중성화"
+          data={NEUT}
+          setState={setNeut}
+          isOpen={selectedDropDown === "중성화"}
+          setSelectedDropDown={setSelectedDropDown}
+        />
       </DropdownArea>
       <H2>
         {shelterName === "전체" ? "경기도" : shelterName}에서 친구들이 기다리고

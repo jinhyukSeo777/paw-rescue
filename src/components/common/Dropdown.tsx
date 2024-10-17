@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import { PHONE } from "./../../utils/size";
 
@@ -55,19 +55,47 @@ interface IProps {
   category: string;
   data: string[];
   setState: React.Dispatch<React.SetStateAction<string>>;
+  isOpen: boolean;
+  setSelectedDropDown: React.Dispatch<React.SetStateAction<string>>;
 }
 
-const Dropdown = ({ category, data, setState }: IProps) => {
-  const [isOpen, setIsOpen] = useState(false);
+const Dropdown = ({
+  category,
+  data,
+  setState,
+  isOpen,
+  setSelectedDropDown,
+}: IProps) => {
   const [value, setValue] = useState(category); // 드롭다운의 현재 value 값
+  const ref = useRef<HTMLUListElement | null>(null); // 드롭다운을 가리키는 ref 객체
+
+  // 외부 클릭시 드롭다운 닫는 함수
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        ref.current &&
+        event.target instanceof Node &&
+        !ref.current.contains(event.target)
+      ) {
+        setSelectedDropDown(""); // 드롭다운 닫는 역할
+      }
+    };
+    // 마운트될 때 클릭 이벤트 리스너 추가
+    document.addEventListener("mousedown", handleClickOutside);
+    // 언마운트될 때 이벤트 리스너 제거
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [setSelectedDropDown]);
 
   const toggleDropdown = () => {
-    setIsOpen((prev) => !prev);
+    if (isOpen) setSelectedDropDown("");
+    else setSelectedDropDown(category);
   };
 
   const handleOptionClick = (value: string) => {
     setValue(value);
-    setIsOpen(false);
+    setSelectedDropDown(""); // 드롭다운 닫는 역할
     setState(value);
   };
 
@@ -75,7 +103,7 @@ const Dropdown = ({ category, data, setState }: IProps) => {
     <Container>
       <DropdownToggle onClick={toggleDropdown}>{value}</DropdownToggle>
       {isOpen && (
-        <DropdownMenu>
+        <DropdownMenu ref={ref}>
           {data.map((value, index) => (
             <li key={index} onClick={() => handleOptionClick(value)}>
               {value}
