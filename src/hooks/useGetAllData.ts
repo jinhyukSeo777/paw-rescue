@@ -14,7 +14,7 @@ export const fetchData = async (page: number): Promise<IData[]> => {
 // 10페이지까지 병렬로 처리하고, 그 후에는 순차적으로 데이터를 요청하는 함수
 export const fetchAllData = async () => {
   let allData: IData[] = [];
-  const totalPagesToFetchInParallel = 10; // 병렬로 요청할 페이지 수
+  const totalPagesToFetchInParallel = 8; // 병렬로 요청할 페이지 수
   let currentPage = 1;
 
   // 1~10 페이지는 병렬로 요청
